@@ -8,7 +8,7 @@ const meta = {
   args: {
     variant: "default",
     size: "default",
-    children: <div>Button</div>,
+    children: <div>Button Test</div>,
   },
   argTypes: {
     variant: {
