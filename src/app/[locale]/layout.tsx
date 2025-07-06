@@ -1,4 +1,4 @@
-import { LocalStorageKeyEnum, ThemeEnum } from "@/lib";
+import { LocaleEnum, LocalStorageKeyEnum, ThemeEnum } from "@/lib";
 import { ThemeProvider } from "@/providers";
 import "@/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -27,14 +27,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: LocaleEnum };
 }>) {
+  const { locale } = await params;
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang={locale} suppressHydrationWarning>
         <body className={"antialiased"}>
           <ThemeProvider
             attribute="class"

@@ -20,3 +20,8 @@ export enum ThemeEnum {
 export enum LocalStorageKeyEnum {
   THEME_KEY = "smart-pokedex-theme",
 }
+
+export enum LocaleEnum {
+  EN = "en",
+  VI = "vi",
+}

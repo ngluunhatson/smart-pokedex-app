@@ -1,6 +1,19 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import createMiddleware from "next-intl/middleware";
+import { LocaleEnum } from "./lib";
 
-export default clerkMiddleware();
+const isApiRoute = createRouteMatcher(["/(api|trpc)(.*)"]);
+
+const intlMiddleware = createMiddleware({
+  locales: Object.values(LocaleEnum),
+  defaultLocale: LocaleEnum.EN,
+});
+
+export default clerkMiddleware((auth, req) => {
+  if (!isApiRoute(req)) {
+    return intlMiddleware(req);
+  }
+});
 
 export const config = {
   matcher: [
