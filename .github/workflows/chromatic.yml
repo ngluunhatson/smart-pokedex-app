@@ -1,5 +1,3 @@
-name: Deploy to Chromatic
-
 on: workflow_call
 
 concurrency:
@@ -33,3 +31,4 @@ jobs:
           # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: true
+          exitOnceUploaded: true

@@ -1,5 +1,4 @@
-name: Check For Changed Files
-
+name: Deploy to Chromatic
 on:
   push:
     branches:
