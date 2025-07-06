@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "themes";
+@import "./themes.css";
 
 @custom-variant dark (&:is(.default-dark,.red-dark,.blue-dark,.green-dark,.orange-dark,.rose-dark,.yellow-dark,.violet-dark *));
 
