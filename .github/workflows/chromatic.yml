@@ -1,4 +1,4 @@
-name: Chromatic
+name: Deploy to Chromatic
 
 on: workflow_call
 
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   chromatic:
-    name: Run Chromatic
+    name: Deploy to Chromatic
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

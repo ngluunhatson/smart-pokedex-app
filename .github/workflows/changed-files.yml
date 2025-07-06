@@ -18,7 +18,7 @@ permissions:
 jobs:
   changed-files:
     runs-on: ubuntu-latest
-    name: changed-files
+    name: Check Changed Files
     outputs:
       all_changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
       any_changed: ${{ steps.changed-files.outputs.any_changed }}
@@ -33,7 +33,7 @@ jobs:
           files: |
             src/components/**
             public/**
-            src/features/**
+            .storybook/**
             .github/workflows/**
 
       - name: List all changed files

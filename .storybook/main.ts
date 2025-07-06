@@ -6,13 +6,13 @@ const config: StorybookConfig = {
     "@storybook/addon-docs",
     "@storybook/addon-themes",
     "storybook-next-intl",
-    "@storybook/addon-a11y"
+    "@storybook/addon-a11y",
   ],
   framework: {
     name: "@storybook/nextjs",
     options: {},
   },
-  staticDirs: ["..\\public"],
+  staticDirs: ["../public"],
   docs: {
     defaultName: "Overview",
   },
