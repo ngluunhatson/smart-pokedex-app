@@ -2,7 +2,39 @@
 @import "tw-animate-css";
 @import "./themes.css";
 
-@custom-variant dark (&:is(.default-dark,.red-dark,.blue-dark,.green-dark,.orange-dark,.rose-dark,.yellow-dark,.violet-dark *));
+@custom-variant dark {
+  &:is(.default-dark *) {
+    @slot;
+  }
+
+  &:is(.red-dark *) {
+    @slot;
+  }
+
+  &:is(.blue-dark *) {
+    @slot;
+  }
+
+  &:is(.green-dark *) {
+    @slot;
+  }
+
+  &:is(.orange-dark *) {
+    @slot;
+  }
+
+  &:is(.rose-dark *) {
+    @slot;
+  }
+
+  &:is(.yellow-dark *) {
+    @slot;
+  }
+
+  &:is(.violet-dark *) {
+    @slot;
+  }
+}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

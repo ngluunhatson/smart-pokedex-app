@@ -8,7 +8,7 @@ const meta = {
   args: {
     variant: "default",
     size: "default",
-    children: <div>Button Test</div>,
+    children: <div>Button</div>,
   },
   argTypes: {
     variant: {
@@ -50,6 +50,9 @@ const meta = {
       control: { type: "radio" },
     },
     asChild: {
+      type: "boolean",
+    },
+    disabled: {
       type: "boolean",
     },
   },
