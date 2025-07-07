@@ -6,22 +6,31 @@ const meta = {
   title: "Components/Icon",
   args: {
     name: "clock",
-    size: 16,
-    color: "red",
+    size: 24,
+    color: "black",
   },
   argTypes: {
     name: {
+      type: {
+        name: "enum",
+        value: IconNameArray,
+        required: true,
+      },
+    },
+    size: {
       table: {
         type: {
-          summary: "string",
+          summary: "number",
         },
         defaultValue: {
-          summary: "null",
+          summary: "24",
         },
       },
-      options: IconNameArray,
-      control: {
-        type: "select",
+    },
+    color: {
+      type: {
+        name: "string",
+        required: true,
       },
     },
   },
