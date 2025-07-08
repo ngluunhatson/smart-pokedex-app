@@ -15,10 +15,10 @@ interface SidebarButtonProps {
   icon?: React.ComponentProps<typeof DynamicIcon>;
 }
 
-interface SidebarProps extends React.ComponentProps<"div"> {
+export interface SidebarProps extends React.ComponentProps<"div"> {
   width?: number;
   mobileWidthThreshold?: number;
-  menuButton?: Omit<SidebarButtonProps, "type" | "onClick">;
+  openButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   closeButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   onSidebarOpenChange?: (isOpen: boolean) => void;
 }
@@ -43,12 +43,13 @@ function SidebarButton({
   SidebarButtonIcon.displayName = "SidebarButtonIcon";
 
   const { className, ...otherButtonProps } = button ?? {};
+
   return (
     <Button
       size="icon"
       className={cn(
-        "shadow-primary absolute right-2",
-        type === "open" && "right-0 translate-x-[36px]",
+        "shadow-primary absolute top-2 right-2",
+        type === "open" && "right-[-8px] translate-x-[36px]",
         className,
       )}
       variant="ghost"
@@ -70,7 +71,7 @@ export function Sidebar({
   mobileWidthThreshold,
   className,
   children,
-  menuButton,
+  openButton,
   closeButton,
   onSidebarOpenChange,
   ...props
@@ -118,7 +119,7 @@ export function Sidebar({
         type={isOpen ? "close" : "open"}
         srText={isOpen ? "Close Menu" : "Open Menu"}
         onClick={() => setSidebarOpen(!isOpen)}
-        {...(isOpen ? closeButton : menuButton)}
+        {...(isOpen ? openButton : closeButton)}
       />
     </div>
   );
