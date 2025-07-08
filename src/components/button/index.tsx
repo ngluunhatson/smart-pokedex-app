@@ -32,7 +32,7 @@ const buttonVariants = tv({
   },
 });
 
-interface ButtonProps
+export interface ButtonProps
   extends React.ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
