@@ -7,6 +7,9 @@ const meta = {
   parameters: {
     layout: "padded",
   },
+  args: {
+    width: 200,
+  },
 } satisfies Meta<typeof Sidebar>;
 
 export default meta;
@@ -18,9 +21,8 @@ export const Default: Story = {
   },
   render: ({ width }) => {
     return (
-      <div className="flex h-[400px] w-full p-4">
+      <div className="flex h-[400px] w-full">
         <Sidebar width={width}>Sidebar Content</Sidebar>
-        <div className="flex-1">Content</div>
       </div>
     );
   },
