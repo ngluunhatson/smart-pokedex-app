@@ -17,6 +17,7 @@ interface SidebarButtonProps {
 
 interface SidebarProps extends React.ComponentProps<"div"> {
   width?: number;
+  mobileWidthThreshold?: number;
   menuButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   closeButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   onSidebarOpenChange?: (isOpen: boolean) => void;
@@ -66,6 +67,7 @@ function SidebarButton({
 
 export function Sidebar({
   width,
+  mobileWidthThreshold,
   className,
   children,
   menuButton,
@@ -74,7 +76,7 @@ export function Sidebar({
   ...props
 }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(mobileWidthThreshold);
 
   const setSidebarOpen = useCallback(
     (newOpen: boolean) => {
