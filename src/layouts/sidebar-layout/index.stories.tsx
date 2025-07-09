@@ -17,10 +17,11 @@ export const Default: Story = {
   render: () => {
     return (
       <SidebarLayout
-        className="h-[500px]"
+        className="relative h-[500px]"
         sidebar={{ children: "Sidebar Content" }}
       >
         Content
+        <div className="absolute top-2 right-2">Right Side Content</div>
       </SidebarLayout>
     );
   },
