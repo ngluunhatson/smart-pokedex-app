@@ -4,7 +4,6 @@ import { DarkModeToggle } from ".";
 const meta = {
   component: DarkModeToggle,
   title: "Components/DarkModeToggle",
-  args: {},
 } satisfies Meta<typeof DarkModeToggle>;
 
 export default meta;
