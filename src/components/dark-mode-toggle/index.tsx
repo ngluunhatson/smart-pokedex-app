@@ -6,15 +6,17 @@ import { Button } from "../button";
 
 interface DarkModeToggleProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost";
-  className?: string;
+  button?: {
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost";
+    className?: string;
+    srText?: string;
+  };
   iconSize?: number;
 }
 
 export function DarkModeToggle({
-  variant,
-  className,
-  iconSize,
+  button,
+  iconSize = 24,
   onClick,
 }: DarkModeToggleProps) {
   const { theme, setTheme } = useTheme();
@@ -22,8 +24,6 @@ export function DarkModeToggle({
   return (
     <Button
       size="icon"
-      variant={variant}
-      className={className}
       onClick={(event) => {
         if (!theme) {
           return;
@@ -35,6 +35,8 @@ export function DarkModeToggle({
           setTheme(theme + "-dark");
         }
       }}
+      aria-label={button?.srText ?? "Toggle dark mode"}
+      {...button}
     >
       <LucideSunMoon size={iconSize} />
     </Button>

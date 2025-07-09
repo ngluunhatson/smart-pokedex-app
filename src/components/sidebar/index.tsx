@@ -23,13 +23,7 @@ export interface SidebarProps extends React.ComponentProps<"div"> {
   onSidebarOpenChange?: (isOpen: boolean) => void;
 }
 
-function SidebarButton({
-  type,
-  onClick,
-  srText,
-  button,
-  icon,
-}: SidebarButtonProps) {
+function SidebarButton({ type, onClick, button, icon }: SidebarButtonProps) {
   const SidebarButtonIcon = ({
     type,
     icon,
@@ -53,6 +47,7 @@ function SidebarButton({
         className,
       )}
       variant="ghost"
+      aria-label={type === "open" ? "Open sidebar" : "Close sidebar"}
       {...otherButtonProps}
       onClick={(event) => {
         event.stopPropagation();
@@ -60,7 +55,6 @@ function SidebarButton({
         button?.onClick?.(event);
       }}
     >
-      <span className="sr-only">{srText}</span>
       <SidebarButtonIcon type={type} icon={icon} />
     </Button>
   );
@@ -117,7 +111,6 @@ export function Sidebar({
 
       <SidebarButton
         type={isOpen ? "close" : "open"}
-        srText={isOpen ? "Close Menu" : "Open Menu"}
         onClick={() => setSidebarOpen(!isOpen)}
         {...(isOpen ? openButton : closeButton)}
       />
