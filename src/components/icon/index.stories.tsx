@@ -7,7 +7,6 @@ const meta = {
   args: {
     name: "clock",
     size: 24,
-    color: "black",
   },
   argTypes: {
     name: {
@@ -30,7 +29,6 @@ const meta = {
     color: {
       type: {
         name: "string",
-        required: true,
       },
     },
   },

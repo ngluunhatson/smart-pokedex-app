@@ -6,7 +6,6 @@ const meta = {
   title: "Components/Loader",
   args: {
     size: 24,
-    color: "black",
   },
   argTypes: {
     size: {
@@ -22,7 +21,6 @@ const meta = {
     color: {
       type: {
         name: "string",
-        required: true,
       },
     },
   },
