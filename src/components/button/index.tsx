@@ -8,11 +8,10 @@ const buttonVariants = tv({
   variants: {
     variant: {
       default:
-        "bg-primary dark:bg-primary/80 text-primary-foreground hover:bg-primary/60 dark:hover:bg-primary/60 shadow-xs",
+        "bg-primary text-primary-foreground hover:bg-primary/60 shadow-xs",
       destructive:
         "bg-destructive hover:bg-destructive/60 dark:hover:bg-destructive/60 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/75 text-white shadow-xs",
-      outline:
-        "bg-background border-primary hover:bg-accent text-primary border shadow-xs",
+      outline: "border-primary hover:bg-accent text-primary border shadow-xs",
       secondary:
         "bg-secondary text-secondary-foreground hover:bg-secondary/60 shadow-xs",
       ghost:
