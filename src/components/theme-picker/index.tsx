@@ -61,8 +61,10 @@ export function ThemePicker({
               <Button
                 key={themeKey}
                 className={cn(
-                  "text-foreground col-span-4 w-full justify-start border-2 p-2",
+                  "col-span-4 w-full justify-start border-2 p-2",
                   themeKey,
+                  themeKey === ThemeEnum.DEFAULT &&
+                    "dark:border-accent dark:text-accent dark:hover:text-primary",
                 )}
                 variant="outline"
                 aria-label={`Pick ${themeKey} theme`}
@@ -74,12 +76,17 @@ export function ThemePicker({
                         themeKey,
                       );
                     } else {
-                      return themeKey + "-dark";
+                      return themeKey;
                     }
                   });
                 }}
               >
-                <Badge className="h-4 w-4 rounded-full"></Badge>
+                <Badge
+                  className={cn(
+                    "h-4 w-4 rounded-full",
+                    themeKey === ThemeEnum.DEFAULT && "dark:border-accent",
+                  )}
+                ></Badge>
                 {themeKey.charAt(0).toUpperCase() + themeKey.slice(1)}
               </Button>
             ))}
