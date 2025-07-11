@@ -92,7 +92,7 @@ export function Sidebar({
         "relative flex transition-[width] duration-500 ease-in-out",
         isOpen &&
           cn(
-            "bg-secondary border-r-primary/60 shadow-primary/60 h-full border-r-[1px] shadow-xs",
+            "bg-secondary border-r-primary/60 shadow-primary/60 h-full border-r-[1px] shadow-lg",
             className,
           ),
         !isOpen && "h-0 p-0",
@@ -101,7 +101,7 @@ export function Sidebar({
     >
       <div
         className={cn(
-          "transition-opacity duration-500 ease-in-out",
+          "w-full transition-opacity duration-500 ease-in-out",
           isOpen ? "opacity-100" : "opacity-0",
         )}
       >
