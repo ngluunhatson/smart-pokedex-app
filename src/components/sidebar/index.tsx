@@ -87,7 +87,7 @@ export function Sidebar({
 
   return (
     <div
-      style={{ width: isOpen ? (isMobile ? "100%" : (width ?? 200)) : 0 }}
+      style={{ width: isOpen ? (isMobile ? "100%" : (width ?? 400)) : 0 }}
       className={cn(
         "relative flex transition-[width] duration-500 ease-in-out",
         isOpen &&
@@ -97,7 +97,6 @@ export function Sidebar({
           ),
         !isOpen && "h-0 p-0",
       )}
-      onClick={() => setSidebarOpen(false)}
       {...props}
     >
       <div
