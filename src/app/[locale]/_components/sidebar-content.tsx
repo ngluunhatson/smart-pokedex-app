@@ -1,22 +1,17 @@
-import { Button } from "@/components";
-import { SignInButton, UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { getTranslations } from "next-intl/server";
 
 export async function SidebarContent() {
-  const { userId } = await auth();
-
-  const isSignedIn = userId !== null;
-
+  const t = await getTranslations();
   return (
-    <div className="flex flex-col">
-      <div className="p-2">
-        {isSignedIn ? (
-          <UserButton />
-        ) : (
-          <SignInButton>
-            <Button>Sign In</Button>
-          </SignInButton>
-        )}
+    <div className="flex h-full w-full flex-col">
+      <div className="text-primary border-b-primary flex h-[60px] w-full items-center justify-center border-b-[1px] p-2 text-center">
+        {t("app-name")}
+      </div>
+      <div className="flex-1 overflow-y-scroll">
+        <div className="h-[2000px]">Sidebar Content</div>
+      </div>
+      <div className="border-t-primary w-full border-t-[1px] p-2 text-center">
+        Footer
       </div>
     </div>
   );

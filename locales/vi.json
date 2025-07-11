@@ -1,5 +1,7 @@
 {
-  "Index": {
-    "title": "Hello world!"
+  "app-name": "Smart Pokédex App",
+  "main-page": {
+    "localization-picker-title": "Chọn ngôn ngữ",
+    "theme-picker-title": "Chọn màu chủ đề"
   }
 }
