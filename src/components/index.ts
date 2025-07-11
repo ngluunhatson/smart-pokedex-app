@@ -5,5 +5,6 @@ export * from "./dropdown-menu";
 export * from "./icon";
 export * from "./input";
 export * from "./loader";
+export * from "./locale-picker";
 export * from "./sidebar";
 export * from "./theme-picker";
