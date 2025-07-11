@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/providers";
 import "@/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
 
 export const metadata: Metadata = {
   title: "Smart Pokédex App",
@@ -39,15 +40,17 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang={locale} suppressHydrationWarning>
         <body className={"antialiased"}>
-          <ThemeProvider
-            attribute="class"
-            storageKey={LocalStorageKeyEnum.THEME_KEY}
-            themes={Object.values(ThemeEnum)}
-            defaultTheme="default"
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <NextIntlClientProvider>
+            <ThemeProvider
+              attribute="class"
+              storageKey={LocalStorageKeyEnum.THEME_KEY}
+              themes={Object.values(ThemeEnum)}
+              defaultTheme="default"
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </NextIntlClientProvider>
         </body>
       </html>
     </ClerkProvider>
