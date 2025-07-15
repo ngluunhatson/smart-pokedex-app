@@ -21,6 +21,7 @@ export interface SidebarProps extends React.ComponentProps<"div"> {
   openButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   closeButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   onSidebarOpenChange?: (isOpen: boolean) => void;
+  variableForAutoCloseOnMobile?: string;
 }
 
 function SidebarButton({ type, onClick, button, icon }: SidebarButtonProps) {
@@ -68,6 +69,7 @@ export function Sidebar({
   openButton,
   closeButton,
   onSidebarOpenChange,
+  variableForAutoCloseOnMobile,
   ...props
 }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(true);
@@ -82,8 +84,12 @@ export function Sidebar({
   );
 
   useEffect(() => {
-    setSidebarOpen(!isMobile);
-  }, [isMobile, setSidebarOpen]);
+    if (variableForAutoCloseOnMobile && isMobile) {
+      setSidebarOpen(false);
+    } else {
+      setSidebarOpen(!isMobile);
+    }
+  }, [isMobile, setSidebarOpen, variableForAutoCloseOnMobile]);
 
   return (
     <div

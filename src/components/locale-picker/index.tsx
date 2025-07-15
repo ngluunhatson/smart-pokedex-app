@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect, usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { LocaleEnum } from "@/lib";
 import { LucideGlobe } from "lucide-react";
 import { Button } from "../button";
@@ -32,6 +32,8 @@ export function LocalePicker({
   localeTitleMap,
 }: LocalePickerProps) {
   const currentPathName = usePathname();
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -51,7 +53,7 @@ export function LocalePicker({
           {Object.values(LocaleEnum).map((locale) => (
             <DropdownMenuItem
               key={`locale-${locale}`}
-              onClick={() => redirect({ locale, href: currentPathName })}
+              onClick={() => router.replace(currentPathName, { locale })}
             >
               {localeTitleMap[locale]}
 
