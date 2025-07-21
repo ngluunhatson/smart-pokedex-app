@@ -2,6 +2,10 @@
   "app-name": "Smart Pokédex App",
   "main-page": {
     "localization-picker-title": "Pick localization",
+    "sidebar-content": {
+      "limit-per-page": "Limit per page",
+      "limit-picker-srText": "Pick limit per page"
+    },
     "theme-picker-title": "Pick theme color"
   }
 }

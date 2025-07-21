@@ -2,6 +2,10 @@
   "app-name": "Smart Pokédex App",
   "main-page": {
     "localization-picker-title": "Chọn ngôn ngữ",
+    "sidebar-content": {
+      "limit-per-page": "Số lượng hàng trang",
+      "limit-picker-srText": "Chọn số lượng hàng trang"
+    },
     "theme-picker-title": "Chọn màu chủ đề"
   }
 }
