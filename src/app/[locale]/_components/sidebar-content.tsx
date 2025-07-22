@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { NamedAPIResourceList, PokemonClient } from "pokenode-ts";
 import { useEffect, useMemo, useState } from "react";
 import { LimitPicker } from "./limit-picker";
+import { PokemonCard } from "./pokemon-card";
 
 const pokeClient = new PokemonClient();
 
@@ -68,12 +69,11 @@ export function SidebarContent({
                   pokeFormId: p.id,
                 },
               }}
-              className="border-t-primary flex w-full flex-col gap-2 border-t-[1px] p-2"
             >
-              <div>
-                {p.name} - {p.id}
-              </div>
-              {p.formName}
+              <PokemonCard
+                pokemon={p}
+                className="border-t-primary border-t-[1px]"
+              />
             </Link>
           );
         })}
