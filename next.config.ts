@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   devIndicators: false,
   images: {
-    domains: ["raw.githubusercontent.com", "archives.bulbagarden.net"],
+    remotePatterns: [
+      { hostname: "raw.githubusercontent.com" },
+      { hostname: "archives.bulbagarden.net" },
+    ],
   },
 };
 

@@ -11,20 +11,20 @@ export const metadata: Metadata = {
   publisher: "Son Nguyen",
   description:
     "A highly interactive Pokédex that allows users to search by name, ID, type, ability, or even egg group.",
-  icons: {
-    icon: [
-      {
-        media: "(prefers-color-scheme: dark)",
-        url: "favicon-dark",
-        href: "/images/favicon.png",
-      },
-      {
-        media: "(prefers-color-scheme: light)",
-        url: "favicon-light",
-        href: "/images/favicon.png",
-      },
-    ],
-  },
+  // icons: {
+  //   icon: [
+  //     {
+  //       media: "(prefers-color-scheme: dark)",
+  //       url: "favicon-dark",
+  //       href: "/images/favicon.png",
+  //     },
+  //     {
+  //       media: "(prefers-color-scheme: light)",
+  //       url: "favicon-light",
+  //       href: "/images/favicon.png",
+  //     },
+  //   ],
+  // },
 };
 
 export default async function RootLayout({
