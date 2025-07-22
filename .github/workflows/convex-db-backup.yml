@@ -24,11 +24,11 @@ jobs:
         run: npx convex export --path ./backup-dev.zip
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_DEV }}
-      - name: Unzip Convex dev data
-        run: unzip ./backup-prod.zip -d ./backup-prod
+      # - name: Unzip Convex prod data
+      #   run: unzip ./backup-prod.zip -d ./backup-prod
 
-      - name: Unzip Convex dev data
-        run: unzip ./backup-dev.zip -d ./backup-dev
+      # - name: Unzip Convex dev data
+      #   run: unzip ./backup-dev.zip -d ./backup-dev
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Upload Convex data
@@ -36,5 +36,5 @@ jobs:
         with:
           name: convex-db-backup@${{ env.NOW }}
           path: |
-            backup-prod/
-            backup-dev/
+            backup-prod.zip
+            backup-dev.zip
