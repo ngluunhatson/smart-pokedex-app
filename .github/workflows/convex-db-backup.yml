@@ -1,0 +1,29 @@
+name: Backup Data from Convex
+
+on:
+  # schedule:
+  #   - cron: "0 0 * * *"
+  push:
+    branches:
+      - main
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Install dependencies
+        run: npm ci
+      - name: Export Convex data
+        run: npx convex export --prod --path ./backup.zip
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      - name: Upload Convex data
+        uses: actions/upload-artifact@v4
+        with:
+          name: convex-db-backup@${{ env.NOW }}
+          path: ./backup.zip
+          compression-level: 9
