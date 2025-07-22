@@ -1,10 +1,7 @@
 "use client";
 
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { LocaleEnum } from "@/lib";
-import { LucideGlobe } from "lucide-react";
-import { Button } from "../button";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -12,7 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../dropdown-menu";
+} from "@/components";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { LocaleEnum } from "@/lib";
+import { LucideGlobe } from "lucide-react";
 
 interface LocalePickerProps {
   dropdownLabel?: string;

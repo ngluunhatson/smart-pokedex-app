@@ -1,14 +1,10 @@
-import {
-  Button,
-  DarkModeToggle,
-  LocalePicker,
-  ThemePicker,
-} from "@/components";
+import { Button, DarkModeToggle, ThemePicker } from "@/components";
 import { SidebarLayout } from "@/layouts/sidebar-layout";
 import { LocaleEnum } from "@/lib";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { getTranslations } from "next-intl/server";
+import { LocalePicker } from "./_components/locale-picker";
 import { SidebarContent } from "./_components/sidebar-content";
 
 export default async function Home({

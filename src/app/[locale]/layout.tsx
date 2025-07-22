@@ -24,10 +24,6 @@ export const metadata: Metadata = {
         href: "/images/favicon.png",
       },
     ],
-    apple: {
-      url: "favicon.png",
-      href: "/images/favicon.png",
-    },
   },
 };
 
