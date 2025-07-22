@@ -26,4 +26,3 @@ jobs:
         with:
           name: convex-db-backup@${{ env.NOW }}
           path: ./backup.zip
-          compression-level: 9

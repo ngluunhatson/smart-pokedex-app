@@ -33,8 +33,7 @@ jobs:
             src/components/**
             public/**
             .storybook/**
-            .github/workflows/**
-
+            .github/workflows/(chromatic|deploy).yml
       - name: List all changed files
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
