@@ -1,11 +1,18 @@
 "use client";
 
+import { Input } from "@/components";
 import { api } from "@/convex/_generated/api";
 import { Link } from "@/i18n/navigation";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { LimitPicker } from "./limit-picker";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationNext,
+  PaginationPrevious,
+} from "./pagination";
 import { PokemonCard } from "./pokemon-card";
 
 interface SidebarContentProps {
@@ -59,8 +66,17 @@ export function SidebarContent({
         })}
       </div>
       <div className="border-t-primary flex w-full items-center justify-between border-t-[1px] p-2">
-        <LimitPicker />
-        {pokemonList?.length}
+        <LimitPicker maxLimit={(pokemonList?.length ?? 0).toString()} />
+
+        <Pagination>
+          <PaginationPrevious href={"#"}></PaginationPrevious>
+          <PaginationContent className="flex gap-2">
+            <Input defaultValue={currentPage} className="w-8" />
+            {"of " + Math.ceil((pokemonList?.length ?? 0) / currentLimit)}
+          </PaginationContent>
+          <PaginationNext href={"#"}>Next</PaginationNext>
+        </Pagination>
+        <div className="w-[80px]">{pokemonList?.length}</div>
       </div>
     </div>
   );
