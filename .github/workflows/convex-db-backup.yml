@@ -16,13 +16,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Export Convex data
-        run: npx convex export --prod --path ./backup-folder
+        run: npx convex export --prod --path ./backup-folder.zip
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+      - name: Unzip Convex data
+        run: unzip ./backup-folder.zip
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Upload Convex data
         uses: actions/upload-artifact@v4
         with:
           name: convex-db-backup@${{ env.NOW }}
-          path: ./backup-folder
+          path: /backup-folder
