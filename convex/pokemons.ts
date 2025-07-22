@@ -1,3 +1,4 @@
+import { PokemonUI } from "@/lib";
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { pokemonSchema } from "./schema";
@@ -5,6 +6,62 @@ import { pokemonSchema } from "./schema";
 export const getAllPokemons = query({
   handler: async (ctx) => {
     return await ctx.db.query("pokemons").collect();
+  },
+});
+
+export const getAndSortAllPokemons = query({
+  args: {
+    types: v.optional(v.array(v.object({ name: v.string(), id: v.string() }))),
+  },
+  handler: async (ctx) => {
+    const pokemonList = await ctx.db.query("pokemons").collect();
+    const indexArray: number[] = [];
+    pokemonList.forEach((pokemon, index, arr) => {
+      if (indexArray.includes(index)) {
+        return;
+      }
+      const pokeNameToCompare = pokemon.name.split("-")[0];
+
+      indexArray.push(index);
+      arr.forEach((insidePokemon, insideIndex) => {
+        if (indexArray.includes(insideIndex)) {
+          return;
+        }
+
+        const insidePokeFormSplit = insidePokemon.name.split("-");
+        if (insidePokeFormSplit.includes(pokeNameToCompare)) {
+          indexArray.push(insideIndex);
+        }
+      });
+    });
+
+    const findFormNameRegex = /^(.*?)-(.*)$/;
+    const sortedPokemonList: PokemonUI[] = [];
+
+    indexArray.forEach((index) => {
+      const pokemon = pokemonList[index];
+
+      if (pokemon.pokeId.length >= 5 || pokemon.nameContainsForm) {
+        const match = pokemon.name.match(findFormNameRegex);
+        sortedPokemonList.push({
+          id: pokemon.pokeId,
+          name: match?.[1] ? match[1] : pokemon.name,
+          formName: match?.[2] ? match[2] : undefined,
+          types: pokemon.types,
+          imageUrl: pokemon.imageUrl,
+        });
+        return;
+      }
+
+      sortedPokemonList.push({
+        id: pokemon.pokeId,
+        name: pokemon.name,
+        types: pokemon.types,
+        imageUrl: pokemon.imageUrl,
+      });
+    });
+
+    return sortedPokemonList;
   },
 });
 

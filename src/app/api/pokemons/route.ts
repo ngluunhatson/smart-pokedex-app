@@ -7,7 +7,7 @@ import { PokemonClient, PokemonSprites } from "pokenode-ts";
 const pokeClient = new PokemonClient();
 
 export async function GET(request: Request) {
-  const pokemonList = await fetchQuery(api.pokemons.getAllPokemons);
+  const pokemonList = await fetchQuery(api.pokemons.getAndSortAllPokemons, {});
 
   return Response.json(pokemonList);
 }
