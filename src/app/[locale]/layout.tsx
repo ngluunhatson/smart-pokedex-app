@@ -1,7 +1,6 @@
 import { LocaleEnum, LocalStorageKeyEnum, ThemeEnum } from "@/lib";
-import { ThemeProvider } from "@/providers";
+import { ConvexClerkProvider, ThemeProvider } from "@/providers";
 import "@/styles/globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 
@@ -25,6 +24,10 @@ export const metadata: Metadata = {
         href: "/images/favicon.png",
       },
     ],
+    apple: {
+      url: "favicon.png",
+      href: "/images/favicon.png",
+    },
   },
 };
 
@@ -37,22 +40,20 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
   return (
-    <ClerkProvider>
-      <html lang={locale} suppressHydrationWarning>
-        <body className={"antialiased"}>
-          <NextIntlClientProvider>
-            <ThemeProvider
-              attribute="class"
-              storageKey={LocalStorageKeyEnum.THEME_KEY}
-              themes={Object.values(ThemeEnum)}
-              defaultTheme="default"
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <body className={"antialiased"}>
+        <NextIntlClientProvider>
+          <ThemeProvider
+            attribute="class"
+            storageKey={LocalStorageKeyEnum.THEME_KEY}
+            themes={Object.values(ThemeEnum)}
+            defaultTheme="default"
+            disableTransitionOnChange
+          >
+            <ConvexClerkProvider>{children}</ConvexClerkProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
