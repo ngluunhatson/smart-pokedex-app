@@ -1,14 +1,12 @@
 "use client";
 
+import { api } from "@/convex/_generated/api";
 import { Link } from "@/i18n/navigation";
-import { sortPokemonFormList } from "@/lib";
+import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
-import { NamedAPIResourceList, PokemonClient } from "pokenode-ts";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { LimitPicker } from "./limit-picker";
 import { PokemonCard } from "./pokemon-card";
-
-const pokeClient = new PokemonClient();
 
 interface SidebarContentProps {
   currentOffSet: number;
@@ -20,34 +18,16 @@ export function SidebarContent({
   currentLimit,
 }: SidebarContentProps) {
   const t = useTranslations();
-  const [pokeFormResourceList, setPokeFormResourceList] =
-    useState<NamedAPIResourceList | null>(null);
-
-  const sortedPokeFormList = useMemo(() => {
-    if (!pokeFormResourceList) {
-      return [];
-    }
-    return sortPokemonFormList(pokeFormResourceList.results);
-  }, [pokeFormResourceList]);
+  const pokemonList = useQuery(api.pokemons.getAndSortAllPokemons, {
+    types: [],
+  });
 
   const pagedPokemonFormList = useMemo(() => {
-    if (!sortedPokeFormList) {
+    if (!pokemonList) {
       return [];
     }
-    return sortedPokeFormList.slice(
-      currentOffSet,
-      currentOffSet + currentLimit,
-    );
-  }, [sortedPokeFormList, currentOffSet, currentLimit]);
-
-  useEffect(() => {
-    pokeClient
-      .listPokemonForms(
-        0,
-        parseInt(process.env.NEXT_PUBLIC_POKEMON_LIMIT ?? "1600"),
-      )
-      .then((e) => setPokeFormResourceList(e));
-  }, []);
+    return pokemonList.slice(currentOffSet, currentOffSet + currentLimit);
+  }, [pokemonList, currentOffSet, currentLimit]);
 
   const currentPage = Math.floor(currentOffSet / currentLimit) + 1;
 
@@ -80,7 +60,7 @@ export function SidebarContent({
       </div>
       <div className="border-t-primary flex w-full items-center justify-between border-t-[1px] p-2">
         <LimitPicker />
-        {pokeFormResourceList?.count}
+        {pokemonList?.length}
       </div>
     </div>
   );

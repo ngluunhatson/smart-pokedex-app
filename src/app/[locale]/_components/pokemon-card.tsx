@@ -1,12 +1,8 @@
-import { cn, standardizeString } from "@/lib";
+import { cn, PokemonUI, standardizeString } from "@/lib";
 import Image from "next/image";
 
 interface PokemonCardProps extends React.ComponentProps<"div"> {
-  pokemon?: {
-    name?: string;
-    id: string;
-    formName?: string;
-  };
+  pokemon: PokemonUI;
 }
 
 export function PokemonCard({
@@ -23,14 +19,14 @@ export function PokemonCard({
       {...props}
     >
       <Image
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.id}.png`}
+        src={pokemon.imageUrl}
         width={100}
         height={100}
-        alt={pokemon?.name ?? ""}
+        alt={pokemon.name ?? ""}
       />
-      <div>{standardizeString(pokemon?.name ?? "")}</div>
-      {standardizeString(pokemon?.formName ?? "")}
-      {pokemon?.id}
+      <div>{standardizeString(pokemon.name ?? "")}</div>
+      {standardizeString(pokemon.formName ?? "")}
+      {pokemon.id}
     </div>
   );
 }
