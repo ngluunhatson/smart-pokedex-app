@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
       { hostname: "raw.githubusercontent.com" },
       { hostname: "archives.bulbagarden.net" },
     ],
+    unoptimized: true,
+    minimumCacheTTL: 2678400,
   },
 };
 
