@@ -13,8 +13,8 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as pokemon_metadata from "../../src/convex/pokemon_metadata.js";
-import type * as pokemons from "../../src/convex/pokemons.js";
+import type * as pokemon_metadata from "../pokemon_metadata.js";
+import type * as pokemons from "../pokemons.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.

@@ -1,6 +1,6 @@
 import { PokemonUI } from "@/lib";
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, query } from "../../convex/_generated/server";
 import { pokemonSchema } from "./schema";
 
 export const getAllPokemons = query({
