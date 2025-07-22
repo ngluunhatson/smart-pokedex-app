@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { SearchParamEnum } from "@/lib";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
@@ -20,7 +21,7 @@ export function LimitPicker() {
   const searchParams = useSearchParams();
   const t = useTranslations("main-page.sidebar-content");
 
-  const currentLimit = searchParams.get("limit") || "100";
+  const currentLimit = searchParams.get(SearchParamEnum.LIMIT) || "100";
   const limitOptionArray = ["50", "100", "150", "200"];
 
   const pokemonUpperLimit = process.env.NEXT_PUBLIC_POKEMON_LIMIT;
