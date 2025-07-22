@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Export Convex data
-        run: npx convex export --prod --path ./backup.zip
+        run: npx convex export --prod --path ./backup-folder
         env:
           CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
       - name: Set current date as env variable
@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: convex-db-backup@${{ env.NOW }}
-          path: ./backup.zip
+          path: ./backup-folder
