@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 export type PokemonUI = {
   id: string;
+  displayId?: string;
   name: string;
   formName?: string;
   types: { name: string; id: string }[];

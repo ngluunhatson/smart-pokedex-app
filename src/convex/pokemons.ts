@@ -61,7 +61,18 @@ export const getAndSortAllPokemons = query({
       });
     });
 
-    return sortedPokemonList;
+    let previousId = "";
+    return sortedPokemonList.map((p) => {
+      if (previousId.length === 0 || p.id.length < 5) {
+        previousId = p.id;
+        return p;
+      }
+
+      return {
+        ...p,
+        displayId: previousId,
+      };
+    });
   },
 });
 
