@@ -1,4 +1,5 @@
 import { Button, DarkModeToggle, ThemePicker } from "@/components";
+import { PaginationProvider } from "@/contexts/pagination-context";
 import { SidebarLayout } from "@/layouts/sidebar-layout";
 import { LocaleEnum } from "@/lib";
 import { SignInButton, UserButton } from "@clerk/nextjs";
@@ -21,7 +22,7 @@ export default async function Home({
 
   const { offset, limit, pokeFormId } = await searchParams;
 
-  const currentOffSet =
+  const currentOffset =
     typeof offset === "string" && !isNaN(parseInt(offset))
       ? parseInt(offset)
       : 0;
@@ -33,38 +34,38 @@ export default async function Home({
   const currentId = typeof pokeFormId === "string" ? pokeFormId : undefined;
 
   return (
-    <SidebarLayout
-      className="relative h-full"
-      sidebar={{
-        variableForAutoCloseOnMobile: currentId,
-        children: (
-          <SidebarContent
-            currentOffSet={currentOffSet}
-            currentLimit={currentLimit}
-          />
-        ),
-      }}
+    <PaginationProvider
+      currentOffset={currentOffset}
+      currentLimit={currentLimit}
     >
-      Content
-      <div className="absolute top-2 right-2 flex gap-2">
-        <ThemePicker dropdownLabel={t("theme-picker-title")} />
-        <DarkModeToggle />
-        <LocalePicker
-          localeTitleMap={{
-            [LocaleEnum.EN]: "English",
-            [LocaleEnum.VI]: "Tiếng Việt",
-          }}
-          dropdownLabel={t("localization-picker-title")}
-        />
+      <SidebarLayout
+        className="relative h-full"
+        sidebar={{
+          variableForAutoCloseOnMobile: currentId,
+          children: <SidebarContent />,
+        }}
+      >
+        Content
+        <div className="absolute top-2 right-2 flex gap-2">
+          <ThemePicker dropdownLabel={t("theme-picker-title")} />
+          <DarkModeToggle />
+          <LocalePicker
+            localeTitleMap={{
+              [LocaleEnum.EN]: "English",
+              [LocaleEnum.VI]: "Tiếng Việt",
+            }}
+            dropdownLabel={t("localization-picker-title")}
+          />
 
-        {isSignedIn ? (
-          <UserButton />
-        ) : (
-          <SignInButton>
-            <Button variant="outline">Sign In</Button>
-          </SignInButton>
-        )}
-      </div>
-    </SidebarLayout>
+          {isSignedIn ? (
+            <UserButton />
+          ) : (
+            <SignInButton>
+              <Button variant="outline">Sign In</Button>
+            </SignInButton>
+          )}
+        </div>
+      </SidebarLayout>
+    </PaginationProvider>
   );
 }

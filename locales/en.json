@@ -4,7 +4,11 @@
     "localization-picker-title": "Pick localization",
     "sidebar-content": {
       "limit-per-page": "Limit per page",
-      "limit-picker-srText": "Pick limit per page"
+      "limit-picker-srText": "Pick limit per page",
+      "total-count": "Total: {count}",
+      "previous-button-srText": "Go to previous page",
+      "next-page": "Go to next page",
+      "loading": "Loading Pokémon..."
     },
     "theme-picker-title": "Pick theme color"
   }

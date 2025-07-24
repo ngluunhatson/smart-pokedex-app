@@ -1,11 +1,15 @@
 {
   "app-name": "Smart Pokédex App",
   "main-page": {
-    "localization-picker-title": "Chọn ngôn ngữ",
+    "localization-picker-title": "Chọn ngôn ngữ",
     "sidebar-content": {
       "limit-per-page": "Số lượng hàng trang",
-      "limit-picker-srText": "Chọn số lượng hàng trang"
+      "limit-picker-srText": "Chọn số lượng hàng trang",
+      "total-count": "Tổng: {count}",
+      "previous-button-srText": "Chuyển đến trang trước",
+      "next-page": "Chuyển đến trang tiếp theo",
+      "loading": "Đang tải Pokémon..."
     },
-    "theme-picker-title": "Chọn màu chủ đề"
+    "theme-picker-title": "Chọn màu chủ đề"
   }
 }
