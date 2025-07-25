@@ -8,3 +8,4 @@ export * from "./loader";
 export * from "./select";
 export * from "./sidebar";
 export * from "./theme-picker";
+export * from "./tooltip";
