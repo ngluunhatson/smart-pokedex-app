@@ -26,7 +26,7 @@ export function PokemonCard({
       />
       <div className="flex flex-col justify-between">
         <div className="flex flex-col gap-[1px]">
-          <span className="text-lg">
+          <span className="h-6 text-lg">
             {standardizeString(pokemon.name ?? "")}
           </span>
           <span className="text-muted-foreground text-sm">
@@ -36,12 +36,19 @@ export function PokemonCard({
 
         <div className="flex flex-wrap gap-1">
           {pokemon.types.map((type) => (
-            <span
+            <div
               key={type.id}
-              className="bg-primary/20 rounded-full px-2 py-1 text-xs"
+              title={standardizeString(type.name)}
+              className="cursor-help"
             >
-              {standardizeString(type.name)}
-            </span>
+              <Image
+                src={`/images/type-icons/${type.name.toLowerCase()}.svg`}
+                width={24}
+                height={24}
+                alt={`${type.name} type`}
+                className="h-6 w-6"
+              />
+            </div>
           ))}
         </div>
       </div>

@@ -65,7 +65,7 @@ export async function POST(request: Request) {
         (e) => e.pokeId === p.id.toString(),
       );
       return {
-        name: p.name,
+        name: pokemonMetadata?.newName ?? p.name,
         types: p.types,
         pokeId: p.id.toString(),
         imageUrl:

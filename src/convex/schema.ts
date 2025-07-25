@@ -14,6 +14,7 @@ export const pokemonMetadataSchema = {
   imageUrl: v.optional(v.string()),
   excludeFromList: v.optional(v.boolean()),
   nameContainsForm: v.optional(v.boolean()),
+  newName: v.optional(v.string()),
 };
 
 export default defineSchema({

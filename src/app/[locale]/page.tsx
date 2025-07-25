@@ -41,6 +41,7 @@ export default async function Home({
       <SidebarLayout
         className="relative h-full"
         sidebar={{
+          width: 400,
           variableForAutoCloseOnMobile: currentId,
           children: <SidebarContent />,
         }}

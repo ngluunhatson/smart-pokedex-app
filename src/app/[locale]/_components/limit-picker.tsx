@@ -31,7 +31,7 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
         router.push({ pathname, query: { offset: "0", limit: newLimit } });
       }}
     >
-      <SelectTrigger className="max-w-[90px] min-w-[90px]">
+      <SelectTrigger>
         <SelectValue aria-label={t("limit-picker-srText")} />
       </SelectTrigger>
       <SelectContent>

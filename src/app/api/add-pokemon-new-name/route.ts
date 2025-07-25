@@ -8,20 +8,18 @@ export async function POST(request: Request) {
   if (!userId) {
     return new Response("Unauthorized", { status: 401 });
   }
-  const idArray: number[] = [
-    10119,
-    10181,
-    ...Array.from({ length: 40 }, (_, i) => 10269 + i),
-    10344,
-    10345,
-  ];
 
-  const updateList = idArray.map((id) => {
-    return {
-      pokeId: id.toString(),
-      excludeFromList: true,
-    };
-  });
+  // Dictionary mapping from pokemon id to new name
+  const idToNewName: Record<string, string> = {
+    // Example entries, replace with your actual mapping
+    "718": "zygarde-50-power-construct",
+    // ... add more mappings as needed
+  };
+
+  const updateList = Object.entries(idToNewName).map(([pokeId, newName]) => ({
+    pokeId,
+    newName,
+  }));
 
   await fetchMutation(api.pokemon_metadata.bulkUpsertMetadata, {
     pokemonMetadata: updateList,

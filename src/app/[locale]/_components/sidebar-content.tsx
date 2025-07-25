@@ -44,7 +44,7 @@ export function SidebarContent() {
     if (inputRef.current) {
       inputRef.current.value = currentPage.toString();
     }
-  }, [currentPage]);
+  }, [currentPage, inputRef]);
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -89,12 +89,12 @@ export function SidebarContent() {
       </div>
 
       {/* Footer */}
-      <div className="border-t-primary flex w-full items-center justify-between border-t-[1px] p-2">
+      <div className="border-t-primary flex w-full items-center justify-between gap-1 border-t-[1px] p-2">
         {pokemonList?.length && (
           <LimitPicker maxLimit={pokemonList.length.toString()} />
         )}
 
-        <Pagination className="flex items-center justify-center gap-3">
+        <Pagination className="flex items-center justify-center gap-2">
           {currentPage > 1 && (
             <PaginationPrevious
               href={{
@@ -107,7 +107,7 @@ export function SidebarContent() {
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
             />
           )}
-          <PaginationContent className="flex gap-3">
+          <PaginationContent className="flex items-center gap-3">
             <Input
               type="number"
               ref={inputRef}
@@ -142,7 +142,7 @@ export function SidebarContent() {
                   });
                 }
               }}
-              className="flex w-10 items-center justify-center"
+              className="flex w-9 items-center justify-center p-2 text-sm"
             />
             <span>of</span>
             <span>{maxPage}</span>
@@ -161,7 +161,7 @@ export function SidebarContent() {
           )}
         </Pagination>
 
-        <div className="flex min-w-[100px] justify-center">
+        <div className="text-muted-foreground flex min-w-[80px] items-center justify-center text-sm">
           {t("main-page.sidebar-content.total-count", {
             count: pokemonList?.length ?? 0,
           })}
