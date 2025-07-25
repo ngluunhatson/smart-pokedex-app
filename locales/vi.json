@@ -15,5 +15,8 @@
       "sign-in-button-text": "Đăng nhập",
       "theme-picker-title": "Chọn màu chủ đề"
     }
+  },
+  "pokemon-detail": {
+    "pick-a-pokemon-text": "Chọn một Pokémon để xem chi tiết"
   }
 }

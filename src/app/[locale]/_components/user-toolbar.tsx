@@ -9,7 +9,7 @@ import { LocalePicker } from "./locale-picker";
 export async function UserToolbar({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: Omit<React.ComponentProps<"div">, "children">) {
   const t = await getTranslations("main-page.user-toolbar");
   const { userId } = await auth();
   const isSignedIn = userId !== null;

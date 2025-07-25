@@ -1,4 +1,4 @@
-import { PaginationProvider } from "@/contexts/pagination-context";
+import { SearchParamProvider } from "@/contexts/search-param-context";
 import {
   SidebarLayout,
   SidebarLayoutContent,
@@ -6,6 +6,7 @@ import {
 } from "@/layouts/sidebar-layout";
 import { LocaleEnum } from "@/lib";
 import { PanelContent } from "./_components/panel-content";
+import { PokemonDetail } from "./_components/pokemon-detail";
 import { UserToolbar } from "./_components/user-toolbar";
 
 export default async function Home({
@@ -15,24 +16,13 @@ export default async function Home({
   params: Promise<{ locale: LocaleEnum }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { offset, limit, pokeId } = await searchParams;
+  const currentSearchParams = await searchParams;
 
-  const currentOffset =
-    typeof offset === "string" && !isNaN(parseInt(offset))
-      ? parseInt(offset)
-      : 0;
-  const currentLimit =
-    typeof limit === "string" && !isNaN(parseInt(limit))
-      ? parseInt(limit)
-      : 100;
-
+  const { pokeId } = currentSearchParams;
   const currentId = typeof pokeId === "string" ? pokeId : undefined;
 
   return (
-    <PaginationProvider
-      currentOffset={currentOffset}
-      currentLimit={currentLimit}
-    >
+    <SearchParamProvider searchParams={currentSearchParams}>
       <SidebarLayout className="relative h-full">
         <SidebarLayoutPanel
           width={400}
@@ -41,10 +31,10 @@ export default async function Home({
           <PanelContent />
         </SidebarLayoutPanel>
         <SidebarLayoutContent>
-          Content
+          <PokemonDetail pokeId={currentId} />
           <UserToolbar className="absolute top-2 right-2" />
         </SidebarLayoutContent>
       </SidebarLayout>
-    </PaginationProvider>
+    </SearchParamProvider>
   );
 }

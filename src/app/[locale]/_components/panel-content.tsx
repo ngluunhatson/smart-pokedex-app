@@ -1,9 +1,10 @@
 "use client";
 
 import { Input, Loader } from "@/components";
-import { usePaginationContext } from "@/contexts/pagination-context";
+import { useSearchParamContext } from "@/contexts/search-param-context";
 import { api } from "@/convex/_generated/api";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { SearchParamEnum } from "@/lib";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
@@ -18,7 +19,7 @@ import { PokemonCard } from "./pokemon-card";
 
 export function PanelContent() {
   const t = useTranslations();
-  const { currentOffset, currentLimit } = usePaginationContext();
+  const { currentOffset, currentLimit, currentId } = useSearchParamContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const currentPathname = usePathname();
@@ -52,6 +53,7 @@ export function PanelContent() {
       <div className="text-primary border-b-primary flex h-[60px] w-full items-center justify-center border-b-[1px] p-2 font-bold">
         <span className="text-xl font-bold">{t("app-name")}</span>
       </div>
+      {/* Header */}
 
       {/* Body - The Pokemon List */}
       <div className="flex flex-1 flex-col overflow-y-scroll">
@@ -72,9 +74,9 @@ export function PanelContent() {
                 href={{
                   pathname: currentPathname,
                   query: {
-                    offset: currentOffset,
-                    limit: currentLimit,
-                    pokeId: p.id,
+                    [SearchParamEnum.OFFSET]: currentOffset,
+                    [SearchParamEnum.LIMIT]: currentLimit,
+                    [SearchParamEnum.POKE_ID]: p.id,
                   },
                 }}
               >
@@ -87,6 +89,7 @@ export function PanelContent() {
           })
         )}
       </div>
+      {/* Body - The Pokemon List */}
 
       {/* Footer */}
       <div className="border-t-primary flex w-full items-center justify-between gap-1 border-t-[1px] p-2">
@@ -100,8 +103,9 @@ export function PanelContent() {
               href={{
                 pathname: currentPathname,
                 query: {
-                  offset: currentOffset - currentLimit,
-                  limit: currentLimit,
+                  [SearchParamEnum.OFFSET]: currentOffset - currentLimit,
+                  [SearchParamEnum.LIMIT]: currentLimit,
+                  [SearchParamEnum.POKE_ID]: currentId,
                 },
               }}
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
@@ -136,8 +140,9 @@ export function PanelContent() {
                   router.push({
                     pathname: currentPathname,
                     query: {
-                      offset: (newPage - 1) * currentLimit,
-                      limit: currentLimit,
+                      [SearchParamEnum.OFFSET]: (newPage - 1) * currentLimit,
+                      [SearchParamEnum.LIMIT]: currentLimit,
+                      [SearchParamEnum.POKE_ID]: currentId,
                     },
                   });
                 }
@@ -153,8 +158,9 @@ export function PanelContent() {
               href={{
                 pathname: currentPathname,
                 query: {
-                  offset: currentOffset + currentLimit,
-                  limit: currentLimit,
+                  [SearchParamEnum.OFFSET]: currentOffset + currentLimit,
+                  [SearchParamEnum.LIMIT]: currentLimit,
+                  [SearchParamEnum.POKE_ID]: currentId,
                 },
               }}
             />
@@ -167,6 +173,7 @@ export function PanelContent() {
           })}
         </div>
       </div>
+      {/* Footer */}
     </div>
   );
 }

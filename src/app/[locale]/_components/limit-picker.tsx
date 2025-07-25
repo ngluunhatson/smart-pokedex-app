@@ -9,15 +9,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components";
-import { usePaginationContext } from "@/contexts/pagination-context";
+import { useSearchParamContext } from "@/contexts/search-param-context";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { SearchParamEnum } from "@/lib";
 import { useTranslations } from "next-intl";
 
 export function LimitPicker({ maxLimit }: { maxLimit: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("main-page.sidebar-content");
-  const { currentLimit } = usePaginationContext();
+  const { currentLimit, currentId } = useSearchParamContext();
 
   const limitOptionArray = ["50", "100", "150", "200", maxLimit];
   if (!limitOptionArray.includes(currentLimit.toString())) {
@@ -28,7 +29,14 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
     <Select
       value={currentLimit.toString()}
       onValueChange={(newLimit) => {
-        router.push({ pathname, query: { offset: "0", limit: newLimit } });
+        router.push({
+          pathname,
+          query: {
+            [SearchParamEnum.OFFSET]: "0",
+            [SearchParamEnum.LIMIT]: newLimit,
+            [SearchParamEnum.POKE_ID]: currentId,
+          },
+        });
       }}
     >
       <SelectTrigger>

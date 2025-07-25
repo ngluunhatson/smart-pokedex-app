@@ -14,5 +14,8 @@
       "sign-in-button-text": "Sign In",
       "theme-picker-title": "Pick theme color"
     }
+  },
+  "pokemon-detail": {
+    "pick-a-pokemon-text": "Pick a Pokémon to see details"
   }
 }
