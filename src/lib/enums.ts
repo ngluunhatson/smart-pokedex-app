@@ -29,5 +29,5 @@ export enum LocaleEnum {
 export enum SearchParamEnum {
   OFFSET = "offset",
   LIMIT = "limit",
-  POKE_FORM_ID = "pokeFormId",
+  POKE_ID = "pokeId",
 }

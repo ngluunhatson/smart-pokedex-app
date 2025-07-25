@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import { SidebarLayout } from ".";
+import { SidebarLayout, SidebarLayoutContent, SidebarLayoutPanel } from ".";
 
 const meta = {
   component: SidebarLayout,
@@ -14,15 +14,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => {
-    return (
-      <SidebarLayout
-        className="relative h-[500px]"
-        sidebar={{ children: "Sidebar Content" }}
-      >
-        Content
-        <div className="absolute top-2 right-2">Right Side Content</div>
-      </SidebarLayout>
-    );
+  args: {
+    children: (
+      <>
+        <SidebarLayoutPanel>Sidebar Content</SidebarLayoutPanel>
+        <SidebarLayoutContent>
+          Content
+          <div className="absolute top-2 right-2">Right Side Content</div>
+        </SidebarLayoutContent>
+      </>
+    ),
   },
 };

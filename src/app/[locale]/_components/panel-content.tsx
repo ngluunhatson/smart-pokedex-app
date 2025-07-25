@@ -16,7 +16,7 @@ import {
 } from "./pagination";
 import { PokemonCard } from "./pokemon-card";
 
-export function SidebarContent() {
+export function PanelContent() {
   const t = useTranslations();
   const { currentOffset, currentLimit } = usePaginationContext();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -74,7 +74,7 @@ export function SidebarContent() {
                   query: {
                     offset: currentOffset,
                     limit: currentLimit,
-                    pokeFormId: p.id,
+                    pokeId: p.id,
                   },
                 }}
               >
