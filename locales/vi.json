@@ -5,11 +5,15 @@
     "sidebar-content": {
       "limit-per-page": "Số lượng hàng trang",
       "limit-picker-srText": "Chọn số lượng hàng trang",
-      "total-count": "Tổng: {count}",
-      "previous-button-srText": "Chuyển đến trang trước",
+      "loading": "Đang tải Pokémon...",
       "next-page": "Chuyển đến trang tiếp theo",
-      "loading": "Đang tải Pokémon..."
+      "previous-button-srText": "Chuyển đến trang trước",
+      "total-count": "Tổng: {count}"
     },
-    "theme-picker-title": "Chọn màu chủ đề"
+    "user-toolbar": {
+      "localization-picker-title": "Chọn ngôn ngữ",
+      "sign-in-button-text": "Đăng nhập",
+      "theme-picker-title": "Chọn màu chủ đề"
+    }
   }
 }
