@@ -5,6 +5,8 @@ import { api } from "@/convex/_generated/api";
 import { useAppContext } from "@/hooks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { SearchParamEnum } from "@/lib";
+import { appLoadingSlice } from "@/stores/app-loading/slice";
+import { useAppSelector } from "@/stores/with-types";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
@@ -21,6 +23,9 @@ export function PanelContent() {
   const t = useTranslations();
 
   const { offset, limit, pokeId } = useAppContext();
+  const isAppLoading = useAppSelector(
+    appLoadingSlice.selectors.selectIsLoading,
+  );
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -59,7 +64,7 @@ export function PanelContent() {
 
       {/* Body - The Pokemon List */}
       <div className="flex flex-1 flex-col overflow-y-scroll">
-        {!pokemonList ? (
+        {!pokemonList || isAppLoading ? (
           <div className="flex flex-1 items-center justify-center">
             <div className="flex flex-col items-center gap-4">
               <Loader className="h-8 w-8" />
