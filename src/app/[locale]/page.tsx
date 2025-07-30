@@ -3,7 +3,7 @@ import {
   SidebarLayoutContent,
   SidebarLayoutPanel,
 } from "@/layouts/sidebar-layout";
-import { LocaleEnum } from "@/lib";
+import { LocaleEnum, SearchParamEnum } from "@/lib";
 import { AppProvider } from "@/providers";
 import StoreProvider from "@/providers/store-provider";
 import { PanelContent } from "./_components/panel-content";
@@ -25,12 +25,16 @@ export default async function Home({
         <SidebarLayout className="relative h-full">
           <SidebarLayoutPanel
             width={400}
-            variableForAutoCloseOnMobile={currentSearchParams.pokeId}
+            variableForAutoCloseOnMobile={
+              currentSearchParams[SearchParamEnum.POKE_NAME]
+            }
           >
             <PanelContent />
           </SidebarLayoutPanel>
           <SidebarLayoutContent>
-            <PokemonDetail pokeId={currentSearchParams.pokeId} />
+            <PokemonDetail
+              pokeName={currentSearchParams[SearchParamEnum.POKE_NAME]}
+            />
             <UserToolbar className="absolute top-2 right-2" />
           </SidebarLayoutContent>
         </SidebarLayout>

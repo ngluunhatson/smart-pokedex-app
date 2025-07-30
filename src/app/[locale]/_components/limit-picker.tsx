@@ -21,7 +21,7 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
   const router = useRouter();
   const t = useTranslations("main-page.sidebar-content");
 
-  const { limit, pokeId } = useAppContext();
+  const { limit, pokeName } = useAppContext();
   const isAppLoading = useAppSelector(
     appLoadingSlice.selectors.selectIsLoading,
   );
@@ -41,7 +41,7 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
           query: {
             [SearchParamEnum.OFFSET]: "0",
             [SearchParamEnum.LIMIT]: newLimit,
-            [SearchParamEnum.POKE_ID]: pokeId,
+            [SearchParamEnum.POKE_NAME]: pokeName ?? undefined,
           },
         });
       }}

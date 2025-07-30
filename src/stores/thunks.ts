@@ -1,4 +1,4 @@
-import { PokemonClient, PokemonForm } from "pokenode-ts";
+import { type Pokemon, PokemonClient, type PokemonForm } from "pokenode-ts";
 import { createAppAsyncThunk } from "./with-types";
 
 export const updateAppPokemonThunk = createAppAsyncThunk(
@@ -6,30 +6,36 @@ export const updateAppPokemonThunk = createAppAsyncThunk(
   async () => {
     const pokemonClient = new PokemonClient();
 
-    // await new Promise((resolve) => setTimeout(resolve, 0));
-    const result = await pokemonClient.listPokemonForms(0, 1600).then((res) => {
-      return res.results;
-    });
-    let offset = 0;
-    const pokemonFormList: (PokemonForm | null)[] = [];
+    let outerOffset = 0;
+    const setLimit = 100;
+    const pokemonFormList: (PokemonForm | Pokemon)[] = [];
+
     while (true) {
-      const slicedResult = result.slice(offset, offset + 100);
-      const tempList = await Promise.all(
-        slicedResult.map(async (p) => {
-          return await pokemonClient
-            .getPokemonFormByName(p.name)
-            .catch((e) => null);
+      const pokemonFormResource = await pokemonClient.listPokemonForms(
+        outerOffset,
+        setLimit,
+      );
+
+      const promiseList = await Promise.allSettled(
+        pokemonFormResource.results.map(async (p) => {
+          return await pokemonClient.getPokemonByName(p.name).catch(() => {
+            return pokemonClient.getPokemonFormByName(p.name);
+          });
         }),
       );
-      pokemonFormList.push(...tempList);
-      offset += 100;
-      await new Promise((resolve) => setTimeout(resolve, 100));
 
-      if (pokemonFormList.length === result.length) {
+      promiseList.forEach((t) => {
+        if (t.status === "fulfilled") {
+          pokemonFormList.push(t.value);
+        }
+      });
+
+      outerOffset += setLimit;
+
+      if (!pokemonFormResource.next) {
         break;
       }
     }
-    console.log(pokemonFormList, "pokemonFormList");
 
     return pokemonFormList;
   },

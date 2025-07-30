@@ -4,22 +4,19 @@ import { PokemonClient } from "pokenode-ts";
 
 interface PokemonDetailProps
   extends Omit<React.ComponentProps<"div">, "children"> {
-  pokeId?: string | string[] | undefined;
+  pokeName?: string | string[] | undefined;
 }
 
 const pokemonClient = new PokemonClient();
 
 export async function PokemonDetail({
-  pokeId: inputPokeId,
   className,
+  pokeName,
   ...props
 }: PokemonDetailProps) {
   const t = await getTranslations("pokemon-detail");
 
-  const pokeId = parseInt(
-    Array.isArray(inputPokeId) ? inputPokeId[0] : (inputPokeId ?? ""),
-  );
-  if (!pokeId || isNaN(pokeId)) {
+  if (!pokeName || typeof pokeName !== "string") {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <span className="text-2xl font-bold">{t("pick-a-pokemon-text")}</span>
@@ -27,9 +24,12 @@ export async function PokemonDetail({
     );
   }
 
-  const pokemon = await pokemonClient.getPokemonById(pokeId).catch(() => {
-    return pokemonClient.getPokemonFormById(pokeId);
-  });
+  const pokemon = await pokemonClient
+    .getPokemonByName(pokeName)
+    .catch(() => {
+      return pokemonClient.getPokemonFormByName(pokeName);
+    })
+    .catch(() => null);
 
   return (
     <div className={cn("flex flex-col", className)} {...props}>

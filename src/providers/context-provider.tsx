@@ -5,7 +5,7 @@ import { createContext, ReactNode } from "react";
 interface AppContextType {
   offset: number;
   limit: number;
-  pokeId?: string;
+  pokeName?: string;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -16,7 +16,7 @@ interface AppProviderProps {
 }
 
 export function AppProvider({ children, searchParams }: AppProviderProps) {
-  const { offset, limit, pokeId } = searchParams;
+  const { offset, limit, pokeName } = searchParams;
 
   const currentOffset =
     typeof offset === "string" && !isNaN(parseInt(offset))
@@ -27,14 +27,13 @@ export function AppProvider({ children, searchParams }: AppProviderProps) {
       ? parseInt(limit)
       : 100;
 
-  const currentId = typeof pokeId === "string" ? pokeId : undefined;
-
+  const currentName = typeof pokeName === "string" ? pokeName : undefined;
   return (
     <AppContext.Provider
       value={{
         offset: currentOffset,
         limit: currentLimit,
-        pokeId: currentId,
+        pokeName: currentName,
       }}
     >
       {children}

@@ -22,7 +22,7 @@ import { PokemonCard } from "./pokemon-card";
 export function PanelContent() {
   const t = useTranslations();
 
-  const { offset, limit, pokeId } = useAppContext();
+  const { offset, limit, pokeName } = useAppContext();
   const isAppLoading = useAppSelector(
     appLoadingSlice.selectors.selectIsLoading,
   );
@@ -83,7 +83,8 @@ export function PanelContent() {
                   query: {
                     [SearchParamEnum.OFFSET]: offset,
                     [SearchParamEnum.LIMIT]: limit,
-                    [SearchParamEnum.POKE_ID]: p.id,
+                    [SearchParamEnum.POKE_NAME]:
+                      p.name + (p.formName ? `-${p.formName}` : ""),
                   },
                 }}
               >
@@ -112,7 +113,7 @@ export function PanelContent() {
                 query: {
                   [SearchParamEnum.OFFSET]: offset - limit,
                   [SearchParamEnum.LIMIT]: limit,
-                  [SearchParamEnum.POKE_ID]: pokeId,
+                  [SearchParamEnum.POKE_NAME]: pokeName,
                 },
               }}
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
@@ -149,7 +150,7 @@ export function PanelContent() {
                     query: {
                       [SearchParamEnum.OFFSET]: (newPage - 1) * limit,
                       [SearchParamEnum.LIMIT]: limit,
-                      [SearchParamEnum.POKE_ID]: pokeId,
+                      [SearchParamEnum.POKE_NAME]: pokeName,
                     },
                   });
                 }
@@ -167,7 +168,7 @@ export function PanelContent() {
                 query: {
                   [SearchParamEnum.OFFSET]: offset + limit,
                   [SearchParamEnum.LIMIT]: limit,
-                  [SearchParamEnum.POKE_ID]: pokeId,
+                  [SearchParamEnum.POKE_NAME]: pokeName,
                 },
               }}
             />
