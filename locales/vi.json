@@ -13,7 +13,8 @@
     "user-toolbar": {
       "localization-picker-title": "Chọn ngôn ngữ",
       "sign-in-button-text": "Đăng nhập",
-      "theme-picker-title": "Chọn màu chủ đề"
+      "theme-picker-title": "Chọn màu chủ đề",
+      "update-button-text": "Cập nhật Pokémon"
     }
   },
   "pokemon-detail": {

@@ -21,7 +21,7 @@ export interface SidebarProps extends React.ComponentProps<"div"> {
   openButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   closeButton?: Omit<SidebarButtonProps, "type" | "onClick">;
   onSidebarOpenChange?: (isOpen: boolean) => void;
-  variableForAutoCloseOnMobile?: string;
+  variableForAutoCloseOnMobile?: any;
 }
 
 function SidebarButton({ type, onClick, button, icon }: SidebarButtonProps) {

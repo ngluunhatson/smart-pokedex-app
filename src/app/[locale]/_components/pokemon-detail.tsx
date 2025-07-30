@@ -4,7 +4,7 @@ import { PokemonClient } from "pokenode-ts";
 
 interface PokemonDetailProps
   extends Omit<React.ComponentProps<"div">, "children"> {
-  pokeId?: string;
+  pokeId?: string | string[] | undefined;
 }
 
 const pokemonClient = new PokemonClient();
@@ -16,7 +16,9 @@ export async function PokemonDetail({
 }: PokemonDetailProps) {
   const t = await getTranslations("pokemon-detail");
 
-  const pokeId = parseInt(inputPokeId ?? "");
+  const pokeId = parseInt(
+    Array.isArray(inputPokeId) ? inputPokeId[0] : (inputPokeId ?? ""),
+  );
   if (!pokeId || isNaN(pokeId)) {
     return (
       <div className="flex h-full w-full items-center justify-center">

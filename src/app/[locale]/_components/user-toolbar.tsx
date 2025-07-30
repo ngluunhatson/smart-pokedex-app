@@ -1,10 +1,13 @@
 import { Button, DarkModeToggle, ThemePicker } from "@/components";
+import { api } from "@/convex/_generated/api";
 import { LocaleEnum } from "@/lib";
 import { cn } from "@/lib/utils";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
+import { fetchQuery } from "convex/nextjs";
 import { getTranslations } from "next-intl/server";
 import { LocalePicker } from "./locale-picker";
+import { UpdateButton } from "./update-button";
 
 export async function UserToolbar({
   className,
@@ -13,6 +16,10 @@ export async function UserToolbar({
   const t = await getTranslations("main-page.user-toolbar");
   const { userId } = await auth();
   const isSignedIn = userId !== null;
+  const userInfo = await fetchQuery(api.user_info.getUserInfo, {
+    clerkUserId: userId ?? undefined,
+  });
+
   return (
     <div className={cn("flex items-center gap-2", className)} {...props}>
       <ThemePicker dropdownLabel={t("theme-picker-title")} />
@@ -24,6 +31,8 @@ export async function UserToolbar({
         }}
         dropdownLabel={t("localization-picker-title")}
       />
+
+      {isSignedIn && userInfo?.role === "admin" && <UpdateButton />}
 
       {isSignedIn ? (
         <UserButton />

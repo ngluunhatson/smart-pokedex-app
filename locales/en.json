@@ -12,7 +12,8 @@
     "user-toolbar": {
       "localization-picker-title": "Pick localization",
       "sign-in-button-text": "Sign In",
-      "theme-picker-title": "Pick theme color"
+      "theme-picker-title": "Pick theme color",
+      "update-button-text": "Update Pokémon"
     }
   },
   "pokemon-detail": {

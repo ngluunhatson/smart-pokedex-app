@@ -12,6 +12,8 @@ export async function POST(request: Request) {
   // Dictionary mapping from pokemon id to new name
   const idToNewName: Record<string, string> = {
     // Example entries, replace with your actual mapping
+    "29": "nidoran-female",
+    "32": "nidoran-male",
     "718": "zygarde-50-power-construct",
     // ... add more mappings as needed
   };

@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as pokemon_metadata from "../pokemon_metadata.js";
 import type * as pokemons from "../pokemons.js";
+import type * as user_info from "../user_info.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -27,6 +28,7 @@ import type * as pokemons from "../pokemons.js";
 declare const fullApi: ApiFromModules<{
   pokemon_metadata: typeof pokemon_metadata;
   pokemons: typeof pokemons;
+  user_info: typeof user_info;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

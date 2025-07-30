@@ -9,32 +9,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components";
-import { useSearchParamContext } from "@/contexts/search-param-context";
+import { useAppContext } from "@/hooks";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { SearchParamEnum } from "@/lib";
+import { appLoadingSlice } from "@/stores/app-loading/slice";
+import { useAppSelector } from "@/stores/with-types";
 import { useTranslations } from "next-intl";
 
 export function LimitPicker({ maxLimit }: { maxLimit: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("main-page.sidebar-content");
-  const { currentLimit, currentId } = useSearchParamContext();
+
+  const { limit, pokeId } = useAppContext();
+  const isAppLoading = useAppSelector(
+    appLoadingSlice.selectors.selectIsLoading,
+  );
 
   const limitOptionArray = ["50", "100", "150", "200", maxLimit];
-  if (!limitOptionArray.includes(currentLimit.toString())) {
-    limitOptionArray.push(currentLimit.toString());
+  if (!limitOptionArray.includes(limit.toString())) {
+    limitOptionArray.push(limit.toString());
   }
 
   return (
     <Select
-      value={currentLimit.toString()}
+      disabled={isAppLoading}
+      value={limit.toString()}
       onValueChange={(newLimit) => {
         router.push({
           pathname,
           query: {
             [SearchParamEnum.OFFSET]: "0",
             [SearchParamEnum.LIMIT]: newLimit,
-            [SearchParamEnum.POKE_ID]: currentId,
+            [SearchParamEnum.POKE_ID]: pokeId,
           },
         });
       }}

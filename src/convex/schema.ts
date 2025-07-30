@@ -17,11 +17,19 @@ export const pokemonMetadataSchema = {
   newName: v.optional(v.string()),
 };
 
+export const userInfoSchema = {
+  clerkUserId: v.string(),
+  role: v.union(v.literal("admin"), v.literal("user")),
+};
+
 export default defineSchema({
   pokemons: defineTable(pokemonSchema)
     .index("by_name", ["name"])
     .index("by_poke_id", ["pokeId"]),
   pokemon_metadata: defineTable(pokemonMetadataSchema).index("by_poke_id", [
     "pokeId",
+  ]),
+  user_info: defineTable(userInfoSchema).index("by_clerk_user_id", [
+    "clerkUserId",
   ]),
 });

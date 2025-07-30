@@ -1,8 +1,8 @@
 "use client";
 
 import { Input, Loader } from "@/components";
-import { useSearchParamContext } from "@/contexts/search-param-context";
 import { api } from "@/convex/_generated/api";
+import { useAppContext } from "@/hooks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { SearchParamEnum } from "@/lib";
 import { useQuery } from "convex/react";
@@ -19,7 +19,9 @@ import { PokemonCard } from "./pokemon-card";
 
 export function PanelContent() {
   const t = useTranslations();
-  const { currentOffset, currentLimit, currentId } = useSearchParamContext();
+
+  const { offset, limit, pokeId } = useAppContext();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const currentPathname = usePathname();
@@ -33,13 +35,13 @@ export function PanelContent() {
     if (!pokemonList) {
       return [];
     }
-    return pokemonList.slice(currentOffset, currentOffset + currentLimit);
-  }, [pokemonList, currentOffset, currentLimit]);
+    return pokemonList.slice(offset, offset + limit);
+  }, [pokemonList, offset, limit]);
 
   const currentPage = useMemo(() => {
-    return Math.floor(currentOffset / currentLimit) + 1;
-  }, [currentLimit, currentOffset]);
-  const maxPage = Math.ceil((pokemonList?.length ?? 0) / currentLimit);
+    return Math.floor(offset / limit) + 1;
+  }, [limit, offset]);
+  const maxPage = Math.ceil((pokemonList?.length ?? 0) / limit);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -74,8 +76,8 @@ export function PanelContent() {
                 href={{
                   pathname: currentPathname,
                   query: {
-                    [SearchParamEnum.OFFSET]: currentOffset,
-                    [SearchParamEnum.LIMIT]: currentLimit,
+                    [SearchParamEnum.OFFSET]: offset,
+                    [SearchParamEnum.LIMIT]: limit,
                     [SearchParamEnum.POKE_ID]: p.id,
                   },
                 }}
@@ -103,9 +105,9 @@ export function PanelContent() {
               href={{
                 pathname: currentPathname,
                 query: {
-                  [SearchParamEnum.OFFSET]: currentOffset - currentLimit,
-                  [SearchParamEnum.LIMIT]: currentLimit,
-                  [SearchParamEnum.POKE_ID]: currentId,
+                  [SearchParamEnum.OFFSET]: offset - limit,
+                  [SearchParamEnum.LIMIT]: limit,
+                  [SearchParamEnum.POKE_ID]: pokeId,
                 },
               }}
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
@@ -140,9 +142,9 @@ export function PanelContent() {
                   router.push({
                     pathname: currentPathname,
                     query: {
-                      [SearchParamEnum.OFFSET]: (newPage - 1) * currentLimit,
-                      [SearchParamEnum.LIMIT]: currentLimit,
-                      [SearchParamEnum.POKE_ID]: currentId,
+                      [SearchParamEnum.OFFSET]: (newPage - 1) * limit,
+                      [SearchParamEnum.LIMIT]: limit,
+                      [SearchParamEnum.POKE_ID]: pokeId,
                     },
                   });
                 }
@@ -158,9 +160,9 @@ export function PanelContent() {
               href={{
                 pathname: currentPathname,
                 query: {
-                  [SearchParamEnum.OFFSET]: currentOffset + currentLimit,
-                  [SearchParamEnum.LIMIT]: currentLimit,
-                  [SearchParamEnum.POKE_ID]: currentId,
+                  [SearchParamEnum.OFFSET]: offset + limit,
+                  [SearchParamEnum.LIMIT]: limit,
+                  [SearchParamEnum.POKE_ID]: pokeId,
                 },
               }}
             />

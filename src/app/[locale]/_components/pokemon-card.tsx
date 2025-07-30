@@ -1,3 +1,4 @@
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components";
 import { cn, PokemonUI, standardizeString } from "@/lib";
 import Image from "next/image";
 
@@ -36,19 +37,20 @@ export function PokemonCard({
 
         <div className="flex flex-wrap gap-1">
           {pokemon.types.map((type) => (
-            <div
-              key={type.id}
-              title={standardizeString(type.name)}
-              className="cursor-help"
-            >
-              <Image
-                src={`/images/type-icons/${type.name.toLowerCase()}.svg`}
-                width={24}
-                height={24}
-                alt={`${type.name} type`}
-                className="h-6 w-6"
-              />
-            </div>
+            <Tooltip key={type.id} delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Image
+                  src={`/images/type-icons/${type.name.toLowerCase()}.svg`}
+                  width={24}
+                  height={24}
+                  alt={`${type.name} type`}
+                  className="h-6 w-6"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>{standardizeString(type.name)}</span>
+              </TooltipContent>
+            </Tooltip>
           ))}
         </div>
       </div>
