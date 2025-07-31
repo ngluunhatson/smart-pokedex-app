@@ -26,7 +26,7 @@ export enum LocaleEnum {
   VI = "vi",
 }
 
-export enum SearchParamEnum {
+export enum SearchParamsEnum {
   OFFSET = "offset",
   LIMIT = "limit",
   POKE_NAME = "pokeName",

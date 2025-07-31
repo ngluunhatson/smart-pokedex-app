@@ -4,7 +4,7 @@ import { Input, Loader } from "@/components";
 import { api } from "@/convex/_generated/api";
 import { useAppContext } from "@/hooks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { SearchParamEnum } from "@/lib";
+import { SearchParamsEnum } from "@/lib";
 import { appLoadingSlice } from "@/stores/app-loading/slice";
 import { useAppSelector } from "@/stores/with-types";
 import { useQuery } from "convex/react";
@@ -81,9 +81,9 @@ export function PanelContent() {
                 href={{
                   pathname: currentPathname,
                   query: {
-                    [SearchParamEnum.OFFSET]: offset,
-                    [SearchParamEnum.LIMIT]: limit,
-                    [SearchParamEnum.POKE_NAME]:
+                    [SearchParamsEnum.OFFSET]: offset,
+                    [SearchParamsEnum.LIMIT]: limit,
+                    [SearchParamsEnum.POKE_NAME]:
                       p.name + (p.formName ? `-${p.formName}` : ""),
                   },
                 }}
@@ -111,9 +111,9 @@ export function PanelContent() {
               href={{
                 pathname: currentPathname,
                 query: {
-                  [SearchParamEnum.OFFSET]: offset - limit,
-                  [SearchParamEnum.LIMIT]: limit,
-                  [SearchParamEnum.POKE_NAME]: pokeName,
+                  [SearchParamsEnum.OFFSET]: offset - limit,
+                  [SearchParamsEnum.LIMIT]: limit,
+                  [SearchParamsEnum.POKE_NAME]: pokeName,
                 },
               }}
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
@@ -148,9 +148,9 @@ export function PanelContent() {
                   router.push({
                     pathname: currentPathname,
                     query: {
-                      [SearchParamEnum.OFFSET]: (newPage - 1) * limit,
-                      [SearchParamEnum.LIMIT]: limit,
-                      [SearchParamEnum.POKE_NAME]: pokeName,
+                      [SearchParamsEnum.OFFSET]: (newPage - 1) * limit,
+                      [SearchParamsEnum.LIMIT]: limit,
+                      [SearchParamsEnum.POKE_NAME]: pokeName,
                     },
                   });
                 }
@@ -166,9 +166,9 @@ export function PanelContent() {
               href={{
                 pathname: currentPathname,
                 query: {
-                  [SearchParamEnum.OFFSET]: offset + limit,
-                  [SearchParamEnum.LIMIT]: limit,
-                  [SearchParamEnum.POKE_NAME]: pokeName,
+                  [SearchParamsEnum.OFFSET]: offset + limit,
+                  [SearchParamsEnum.LIMIT]: limit,
+                  [SearchParamsEnum.POKE_NAME]: pokeName,
                 },
               }}
             />
