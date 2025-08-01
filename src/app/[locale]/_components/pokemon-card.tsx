@@ -1,5 +1,15 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components";
+"use client";
+
+import {
+  Button,
+  Icon,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components";
+import { api } from "@/convex/_generated/api";
 import { cn, PokemonUI, standardizeString } from "@/lib";
+import { useMutation } from "convex/react";
 import Image from "next/image";
 
 interface PokemonCardProps extends React.ComponentProps<"div"> {
@@ -11,6 +21,18 @@ export function PokemonCard({
   className,
   ...props
 }: PokemonCardProps) {
+  const toggleFavorite = useMutation(
+    api.user_favorite_pokemons.addOrRemoveFavoritePokemon,
+  );
+
+  const handleFavoriteToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleFavorite({
+      pokemonId: pokemon._id,
+    });
+  };
+
   return (
     <div
       className={cn(
@@ -54,9 +76,26 @@ export function PokemonCard({
           ))}
         </div>
       </div>
-      <span className="text-muted-foreground absolute top-2 right-2 text-sm">
-        {pokemon.displayId || pokemon.id}
+      <span className="text-muted-foreground absolute top-2 right-4 text-sm">
+        {pokemon.displayId || pokemon.pokeId}
       </span>
+      <Button
+        size="icon"
+        variant="ghost"
+        className="absolute right-2 bottom-2 h-8 w-8 hover:bg-red-50 dark:hover:bg-red-950"
+        onClick={handleFavoriteToggle}
+        aria-label={
+          pokemon.isFavorite ? "Remove from favorites" : "Add to favorites"
+        }
+      >
+        <Icon
+          name="heart"
+          size={16}
+          className={
+            pokemon.isFavorite ? "fill-destructive text-destructive" : ""
+          }
+        />
+      </Button>
     </div>
   );
 }

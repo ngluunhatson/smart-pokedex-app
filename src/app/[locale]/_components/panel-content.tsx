@@ -36,6 +36,11 @@ export function PanelContent() {
     types: [],
   });
 
+  const favoritePokemons = useQuery(
+    api.user_favorite_pokemons.getFavoritePokemons,
+    {},
+  );
+
   const pagedPokemonFormList = useMemo(() => {
     if (!pokemonList) {
       return [];
@@ -77,7 +82,7 @@ export function PanelContent() {
           pagedPokemonFormList.map((p) => {
             return (
               <Link
-                key={p.id}
+                key={p._id}
                 href={{
                   pathname: currentPathname,
                   query: {
@@ -89,7 +94,12 @@ export function PanelContent() {
                 }}
               >
                 <PokemonCard
-                  pokemon={p}
+                  pokemon={{
+                    ...p,
+                    isFavorite: favoritePokemons?.some(
+                      (fp) => fp._id === p._id,
+                    ),
+                  }}
                   className="border-t-primary border-t-[1px]"
                 />
               </Link>

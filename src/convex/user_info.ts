@@ -1,25 +1,22 @@
-import { query } from "@/convex/_generated/server";
+import { mutation } from "@/convex/_generated/server";
 import { v } from "convex/values";
+import { getUserInfo } from "./utils";
 
-export const getUserInfo = query({
+export const createOrGetUserInfo = mutation({
   args: {
-    clerkUserId: v.optional(v.string()), // for server side
+    clerkUserId: v.string(),
   },
   handler: async (ctx, args) => {
-    const clerkUser = await ctx.auth.getUserIdentity();
+    const userInfo = await getUserInfo(ctx, args.clerkUserId);
 
-    let id = args.clerkUserId;
-    if (!id) {
-      id = clerkUser?.subject;
+    if (userInfo) {
+      return userInfo;
     }
+    const newUserInfoId = await ctx.db.insert("user_info", {
+      clerkUserId: args.clerkUserId,
+      role: "user",
+    });
 
-    if (!id) {
-      return null;
-    }
-
-    return await ctx.db
-      .query("user_info")
-      .withIndex("by_clerk_user_id", (q) => q.eq("clerkUserId", id))
-      .first();
+    return await ctx.db.get(newUserInfoId);
   },
 });

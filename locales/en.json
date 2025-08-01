@@ -17,6 +17,7 @@
     }
   },
   "pokemon-detail": {
-    "pick-a-pokemon-text": "Pick a Pokémon to see details"
+    "pick-a-pokemon-text": "Pick a Pokémon to see details",
+    "pokemon-not-found-text": "Pokemon not found"
   }
 }

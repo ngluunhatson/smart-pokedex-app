@@ -4,7 +4,7 @@ import { LocaleEnum } from "@/lib";
 import { cn } from "@/lib/utils";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import { fetchQuery } from "convex/nextjs";
+import { fetchMutation } from "convex/nextjs";
 import { getTranslations } from "next-intl/server";
 import { LocalePicker } from "./locale-picker";
 import { UpdateButton } from "./update-button";
@@ -14,11 +14,13 @@ export async function UserToolbar({
   ...props
 }: Omit<React.ComponentProps<"div">, "children">) {
   const t = await getTranslations("main-page.user-toolbar");
-  const { userId } = await auth();
-  const isSignedIn = userId !== null;
-  const userInfo = await fetchQuery(api.user_info.getUserInfo, {
-    clerkUserId: userId ?? undefined,
-  });
+  const { userId: clerkUserId } = await auth();
+  const isSignedIn = clerkUserId !== null;
+  const userInfo = isSignedIn
+    ? await fetchMutation(api.user_info.createOrGetUserInfo, {
+        clerkUserId,
+      })
+    : null;
 
   return (
     <div className={cn("flex items-center gap-2", className)} {...props}>

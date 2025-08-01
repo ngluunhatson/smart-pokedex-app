@@ -31,17 +31,21 @@ export async function PokemonDetail({
     })
     .catch(() => null);
 
+  if (!pokemon) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <span className="text-2xl font-bold">
+          {t("pokemon-not-found-text")}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("flex flex-col", className)} {...props}>
-      {pokemon ? (
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-bold">{pokemon.name}</h1>
-        </div>
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          <span className="text-2xl font-bold">{t("pick-a-pokemon-text")}</span>
-        </div>
-      )}
+      <div className="flex flex-col">
+        <h1 className="text-2xl font-bold">{pokemon.name}</h1>
+      </div>
     </div>
   );
 }

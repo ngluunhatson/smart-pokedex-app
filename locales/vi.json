@@ -18,6 +18,7 @@
     }
   },
   "pokemon-detail": {
-    "pick-a-pokemon-text": "Chọn một Pokémon để xem chi tiết"
+    "pick-a-pokemon-text": "Chọn một Pokémon để xem chi tiết",
+    "pokemon-not-found-text": "Không tìm thấy Pokémon"
   }
 }

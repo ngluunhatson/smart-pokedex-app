@@ -1,7 +1,7 @@
 import { mutation, query } from "@/convex/_generated/server";
 import { PokemonUI } from "@/lib";
 import { v } from "convex/values";
-import { pokemonSchema } from "./schema";
+import { pokemonValidator } from "./schema";
 
 export const getAllPokemons = query({
   handler: async (ctx) => {
@@ -44,7 +44,8 @@ export const getAndSortAllPokemons = query({
       if (pokemon.pokeId.length >= 5 || pokemon.nameContainsForm) {
         const match = pokemon.name.match(findFormNameRegex);
         sortedPokemonList.push({
-          id: pokemon.pokeId,
+          _id: pokemon._id,
+          pokeId: pokemon.pokeId,
           name: match?.[1] ? match[1] : pokemon.name,
           formName: match?.[2] ? match[2] : undefined,
           types: pokemon.types,
@@ -54,7 +55,8 @@ export const getAndSortAllPokemons = query({
       }
 
       sortedPokemonList.push({
-        id: pokemon.pokeId,
+        _id: pokemon._id,
+        pokeId: pokemon.pokeId,
         name: pokemon.name,
         types: pokemon.types,
         imageUrl: pokemon.imageUrl,
@@ -63,8 +65,8 @@ export const getAndSortAllPokemons = query({
 
     let previousId = "";
     return sortedPokemonList.map((p) => {
-      if (previousId.length === 0 || p.id.length < 5) {
-        previousId = p.id;
+      if (previousId.length === 0 || p.pokeId.length < 5) {
+        previousId = p.pokeId;
         return p;
       }
 
@@ -77,7 +79,7 @@ export const getAndSortAllPokemons = query({
 });
 
 export const insertPokemon = mutation({
-  args: pokemonSchema,
+  args: pokemonValidator,
   handler: async (ctx, args) => {
     await ctx.db.insert("pokemons", args);
   },
@@ -109,14 +111,14 @@ export const deletePokemon = mutation({
 
 export const bulkUpsertPokemons = mutation({
   args: {
-    pokemons: v.array(v.object(pokemonSchema)),
+    pokemons: v.array(pokemonValidator),
   },
   handler: async (ctx, args) => {
     for (const pokemon of args.pokemons) {
       const existingPokemon = await ctx.db
         .query("pokemons")
         .withIndex("by_poke_id", (q) => q.eq("pokeId", pokemon.pokeId))
-        .first();
+        .unique();
       if (existingPokemon) {
         await ctx.db.patch(existingPokemon._id, pokemon);
         continue;
