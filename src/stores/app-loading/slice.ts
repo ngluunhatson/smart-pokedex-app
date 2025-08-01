@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { updateAppPokemonThunk } from "../thunks";
 
 export interface AppLoadingState {
@@ -14,7 +14,14 @@ const initialState: AppLoadingState = {
 export const appLoadingSlice = createSlice({
   name: "appLoading",
   initialState,
-  reducers: {},
+  reducers: {
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setStatus: (state, action: PayloadAction<AppLoadingState["status"]>) => {
+      state.status = action.payload;
+    },
+  },
   selectors: {
     selectIsLoading: (state) => state.isLoading,
     selectStatus: (state) => state.status,

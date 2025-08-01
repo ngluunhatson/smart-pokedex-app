@@ -11,7 +11,7 @@ import {
 } from "@/components";
 import { useAppContext } from "@/hooks";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { SearchParamsEnum } from "@/lib";
+import { buildQueryObject, SearchParamsEnum } from "@/lib";
 import { appLoadingSlice } from "@/stores/app-loading/slice";
 import { useAppSelector } from "@/stores/with-types";
 import { useTranslations } from "next-intl";
@@ -38,11 +38,11 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
       onValueChange={(newLimit) => {
         router.push({
           pathname,
-          query: {
+          query: buildQueryObject({
             [SearchParamsEnum.OFFSET]: "0",
             [SearchParamsEnum.LIMIT]: newLimit,
             [SearchParamsEnum.POKE_NAME]: pokeName ?? undefined,
-          },
+          }),
         });
       }}
     >

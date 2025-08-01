@@ -4,9 +4,9 @@ import { Input, Loader } from "@/components";
 import { api } from "@/convex/_generated/api";
 import { useAppContext } from "@/hooks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { SearchParamsEnum } from "@/lib";
+import { buildQueryObject, SearchParamsEnum } from "@/lib";
 import { appLoadingSlice } from "@/stores/app-loading/slice";
-import { useAppSelector } from "@/stores/with-types";
+import { useAppDispatch, useAppSelector } from "@/stores/with-types";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
@@ -26,6 +26,7 @@ export function PanelContent() {
   const isAppLoading = useAppSelector(
     appLoadingSlice.selectors.selectIsLoading,
   );
+  const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -59,6 +60,13 @@ export function PanelContent() {
     }
   }, [currentPage, inputRef]);
 
+  useEffect(() => {
+    dispatch(appLoadingSlice.actions.setIsLoading(true));
+    if (pokemonList) {
+      dispatch(appLoadingSlice.actions.setIsLoading(false));
+    }
+  }, [pokemonList, dispatch]);
+
   return (
     <div className="flex h-full w-full flex-col">
       {/* Header */}
@@ -69,7 +77,7 @@ export function PanelContent() {
 
       {/* Body - The Pokemon List */}
       <div className="flex flex-1 flex-col overflow-y-scroll">
-        {!pokemonList || isAppLoading ? (
+        {isAppLoading ? (
           <div className="flex flex-1 items-center justify-center">
             <div className="flex flex-col items-center gap-4">
               <Loader className="h-8 w-8" />
@@ -115,16 +123,17 @@ export function PanelContent() {
           <LimitPicker maxLimit={pokemonList.length.toString()} />
         )}
 
+        {/* Footer - Pagination */}
         <Pagination className="flex items-center justify-center gap-2">
-          {currentPage > 1 && (
+          {currentPage > 1 && !isAppLoading && (
             <PaginationPrevious
               href={{
                 pathname: currentPathname,
-                query: {
+                query: buildQueryObject({
                   [SearchParamsEnum.OFFSET]: offset - limit,
                   [SearchParamsEnum.LIMIT]: limit,
                   [SearchParamsEnum.POKE_NAME]: pokeName,
-                },
+                }),
               }}
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
             />
@@ -132,6 +141,8 @@ export function PanelContent() {
           <PaginationContent className="flex items-center gap-3">
             <Input
               type="number"
+              disabled={isAppLoading}
+              aria-label={t("main-page.sidebar-content.page-input-srText")}
               ref={inputRef}
               onKeyDown={(e) => {
                 if (e.key === "e" || e.key === "E") {
@@ -157,11 +168,11 @@ export function PanelContent() {
                 if (newPage >= 1 && newPage <= maxPage) {
                   router.push({
                     pathname: currentPathname,
-                    query: {
+                    query: buildQueryObject({
                       [SearchParamsEnum.OFFSET]: (newPage - 1) * limit,
                       [SearchParamsEnum.LIMIT]: limit,
                       [SearchParamsEnum.POKE_NAME]: pokeName,
-                    },
+                    }),
                   });
                 }
               }}
@@ -170,26 +181,29 @@ export function PanelContent() {
             <span>of</span>
             <span>{maxPage}</span>
           </PaginationContent>
-          {currentPage < maxPage && (
+          {currentPage < maxPage && !isAppLoading && (
             <PaginationNext
               aria-label={t("main-page.sidebar-content.next-page")}
               href={{
                 pathname: currentPathname,
-                query: {
+                query: buildQueryObject({
                   [SearchParamsEnum.OFFSET]: offset + limit,
                   [SearchParamsEnum.LIMIT]: limit,
                   [SearchParamsEnum.POKE_NAME]: pokeName,
-                },
+                }),
               }}
             />
           )}
         </Pagination>
+        {/* Footer - Pagination */}
 
+        {/* Footer - Total Count */}
         <div className="text-muted-foreground flex min-w-[80px] items-center justify-center text-sm">
           {t("main-page.sidebar-content.total-count", {
             count: pokemonList?.length ?? 0,
           })}
         </div>
+        {/* Footer - Total Count */}
       </div>
       {/* Footer */}
     </div>

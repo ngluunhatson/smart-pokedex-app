@@ -1,6 +1,7 @@
 import { Id } from "@/convex/_generated/dataModel";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { SearchParamsEnum } from "./enums";
 
 export type PokemonUI = {
   _id: Id<"pokemons">;
@@ -33,4 +34,16 @@ export function extractIdFromUrl(url: string, matchStr: string) {
     return match[1];
   }
   return null;
+}
+
+export function buildQueryObject(
+  inputQueryObject: Record<SearchParamsEnum, string | number | undefined>,
+) {
+  const returnQueryObject: Record<string, string | number> = {};
+  Object.entries(inputQueryObject).forEach(([key, value]) => {
+    if (value) {
+      returnQueryObject[key] = value;
+    }
+  });
+  return returnQueryObject;
 }
