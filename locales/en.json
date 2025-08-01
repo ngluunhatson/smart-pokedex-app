@@ -6,6 +6,11 @@
       "limit-picker-srText": "Pick limit per page",
       "loading": "Loading Pokémon...",
       "next-page": "Go to next page",
+      "page-input-srText": "Pick page number",
+      "pokemon-card": {
+        "add-to-favorites": "Add to favorites",
+        "remove-from-favorites": "Remove from favorites"
+      },
       "previous-button-srText": "Go to previous page",
       "total-count": "Total: {count}"
     },

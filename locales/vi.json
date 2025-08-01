@@ -7,6 +7,11 @@
       "limit-picker-srText": "Chọn số lượng hàng trang",
       "loading": "Đang tải Pokémon...",
       "next-page": "Chuyển đến trang tiếp theo",
+      "page-input-srText": "Chọn số trang hiện tại",
+      "pokemon-card": {
+        "add-to-favorites": "Thêm vào yêu thích",
+        "remove-from-favorites": "Xóa khỏi yêu thích"
+      },
       "previous-button-srText": "Chuyển đến trang trước",
       "total-count": "Tổng: {count}"
     },

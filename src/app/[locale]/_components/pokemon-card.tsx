@@ -10,6 +10,7 @@ import {
 import { api } from "@/convex/_generated/api";
 import { cn, PokemonUI, standardizeString } from "@/lib";
 import { useMutation } from "convex/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface PokemonCardProps extends React.ComponentProps<"div"> {
@@ -21,6 +22,8 @@ export function PokemonCard({
   className,
   ...props
 }: PokemonCardProps) {
+  const t = useTranslations("main-page.sidebar-content.pokemon-card");
+
   const toggleFavorite = useMutation(
     api.user_favorite_pokemons.addOrRemoveFavoritePokemon,
   );
@@ -85,7 +88,9 @@ export function PokemonCard({
         className="absolute right-2 bottom-2 h-8 w-8 hover:bg-red-50 dark:hover:bg-red-950"
         onClick={handleFavoriteToggle}
         aria-label={
-          pokemon.isFavorite ? "Remove from favorites" : "Add to favorites"
+          pokemon.isFavorite
+            ? t("remove-from-favorites")
+            : t("add-to-favorites")
         }
       >
         <Icon
