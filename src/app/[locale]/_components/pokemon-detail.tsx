@@ -1,22 +1,23 @@
+"use client";
+
+import { Loader } from "@/components";
+import { api } from "@/convex/_generated/api";
+import { useAppContext } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { getTranslations } from "next-intl/server";
-import { PokemonClient } from "pokenode-ts";
+import { useQuery } from "convex/react";
+import { useTranslations } from "next-intl";
 
-interface PokemonDetailProps
-  extends Omit<React.ComponentProps<"div">, "children"> {
-  pokeName?: string | string[] | undefined;
-}
-
-const pokemonClient = new PokemonClient();
-
-export async function PokemonDetail({
+export function PokemonDetail({
   className,
-  pokeName,
   ...props
-}: PokemonDetailProps) {
-  const t = await getTranslations("pokemon-detail");
+}: Omit<React.ComponentProps<"div">, "children">) {
+  const t = useTranslations("pokemon-detail");
+  const { pokemonId } = useAppContext();
+  const pokemon = useQuery(api.pokemons.getPokemonById, {
+    id: pokemonId,
+  });
 
-  if (!pokeName || typeof pokeName !== "string") {
+  if (!pokemonId || typeof pokemonId !== "string") {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <span className="text-2xl font-bold">{t("pick-a-pokemon-text")}</span>
@@ -24,14 +25,20 @@ export async function PokemonDetail({
     );
   }
 
-  const pokemon = await pokemonClient
-    .getPokemonByName(pokeName)
-    .catch(() => {
-      return pokemonClient.getPokemonFormByName(pokeName);
-    })
-    .catch(() => null);
+  if (pokemon === undefined) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader size={48} />
+          <span className="text-2xl font-bold">
+            {t("pokemon-loading-text")}
+          </span>
+        </div>
+      </div>
+    );
+  }
 
-  if (!pokemon) {
+  if (pokemon === null) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <span className="text-2xl font-bold">

@@ -21,6 +21,12 @@ export const appLoadingSlice = createSlice({
     setStatus: (state, action: PayloadAction<AppLoadingState["status"]>) => {
       state.status = action.payload;
     },
+    setState: (state, action: PayloadAction<Partial<AppLoadingState>>) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
   },
   selectors: {
     selectIsLoading: (state) => state.isLoading,

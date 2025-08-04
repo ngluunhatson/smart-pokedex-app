@@ -41,7 +41,7 @@ export function buildQueryObject(
 ) {
   const returnQueryObject: Record<string, string | number> = {};
   Object.entries(inputQueryObject).forEach(([key, value]) => {
-    if (value) {
+    if (value !== undefined) {
       returnQueryObject[key] = value;
     }
   });

@@ -22,7 +22,7 @@ import { PokemonCard } from "./pokemon-card";
 export function PanelContent() {
   const t = useTranslations();
 
-  const { offset, limit, pokeName } = useAppContext();
+  const { offset, limit, pokemonId } = useAppContext();
   const isAppLoading = useAppSelector(
     appLoadingSlice.selectors.selectIsLoading,
   );
@@ -61,9 +61,19 @@ export function PanelContent() {
   }, [currentPage, inputRef]);
 
   useEffect(() => {
-    dispatch(appLoadingSlice.actions.setIsLoading(true));
+    dispatch(
+      appLoadingSlice.actions.setState({
+        isLoading: true,
+        status: "loading",
+      }),
+    );
     if (pokemonList) {
-      dispatch(appLoadingSlice.actions.setIsLoading(false));
+      dispatch(
+        appLoadingSlice.actions.setState({
+          isLoading: false,
+          status: "success",
+        }),
+      );
     }
   }, [pokemonList, dispatch]);
 
@@ -96,8 +106,7 @@ export function PanelContent() {
                   query: {
                     [SearchParamsEnum.OFFSET]: offset,
                     [SearchParamsEnum.LIMIT]: limit,
-                    [SearchParamsEnum.POKE_NAME]:
-                      p.name + (p.formName ? `-${p.formName}` : ""),
+                    [SearchParamsEnum.POKEMON_ID]: p._id,
                   },
                 }}
               >
@@ -132,7 +141,7 @@ export function PanelContent() {
                 query: buildQueryObject({
                   [SearchParamsEnum.OFFSET]: offset - limit,
                   [SearchParamsEnum.LIMIT]: limit,
-                  [SearchParamsEnum.POKE_NAME]: pokeName,
+                  [SearchParamsEnum.POKEMON_ID]: pokemonId,
                 }),
               }}
               aria-label={t("main-page.sidebar-content.previous-button-srText")}
@@ -171,7 +180,7 @@ export function PanelContent() {
                     query: buildQueryObject({
                       [SearchParamsEnum.OFFSET]: (newPage - 1) * limit,
                       [SearchParamsEnum.LIMIT]: limit,
-                      [SearchParamsEnum.POKE_NAME]: pokeName,
+                      [SearchParamsEnum.POKEMON_ID]: pokemonId,
                     }),
                   });
                 }
@@ -189,7 +198,7 @@ export function PanelContent() {
                 query: buildQueryObject({
                   [SearchParamsEnum.OFFSET]: offset + limit,
                   [SearchParamsEnum.LIMIT]: limit,
-                  [SearchParamsEnum.POKE_NAME]: pokeName,
+                  [SearchParamsEnum.POKEMON_ID]: pokemonId,
                 }),
               }}
             />

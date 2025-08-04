@@ -1,11 +1,12 @@
 "use client";
 
+import { Id } from "@/convex/_generated/dataModel";
 import { createContext, ReactNode } from "react";
 
 interface AppContextType {
   offset: number;
   limit: number;
-  pokeName?: string;
+  pokemonId?: Id<"pokemons">;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -16,7 +17,7 @@ interface AppProviderProps {
 }
 
 export function AppProvider({ children, searchParams }: AppProviderProps) {
-  const { offset, limit, pokeName } = searchParams;
+  const { offset, limit, pokemonId } = searchParams;
 
   const currentOffset =
     typeof offset === "string" && !isNaN(parseInt(offset))
@@ -27,13 +28,14 @@ export function AppProvider({ children, searchParams }: AppProviderProps) {
       ? parseInt(limit)
       : 100;
 
-  const currentName = typeof pokeName === "string" ? pokeName : undefined;
+  const currentPokemonId =
+    typeof pokemonId === "string" ? (pokemonId as Id<"pokemons">) : undefined;
   return (
     <AppContext.Provider
       value={{
         offset: currentOffset,
         limit: currentLimit,
-        pokeName: currentName,
+        pokemonId: currentPokemonId,
       }}
     >
       {children}

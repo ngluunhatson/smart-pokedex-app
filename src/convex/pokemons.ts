@@ -78,6 +78,18 @@ export const getAndSortAllPokemons = query({
   },
 });
 
+export const getPokemonById = query({
+  args: {
+    id: v.optional(v.id("pokemons")),
+  },
+  handler: async (ctx, args) => {
+    if (!args.id) {
+      return null;
+    }
+    return await ctx.db.get(args.id);
+  },
+});
+
 export const insertPokemon = mutation({
   args: pokemonValidator,
   handler: async (ctx, args) => {

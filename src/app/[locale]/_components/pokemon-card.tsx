@@ -9,6 +9,7 @@ import {
 } from "@/components";
 import { api } from "@/convex/_generated/api";
 import { cn, PokemonUI, standardizeString } from "@/lib";
+import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -23,6 +24,7 @@ export function PokemonCard({
   ...props
 }: PokemonCardProps) {
   const t = useTranslations("main-page.sidebar-content.pokemon-card");
+  const { isSignedIn } = useUser();
 
   const toggleFavorite = useMutation(
     api.user_favorite_pokemons.addOrRemoveFavoritePokemon,
@@ -82,25 +84,27 @@ export function PokemonCard({
       <span className="text-muted-foreground absolute top-2 right-4 text-sm">
         {pokemon.displayId || pokemon.pokeId}
       </span>
-      <Button
-        size="icon"
-        variant="ghost"
-        className="absolute right-2 bottom-2 h-8 w-8 hover:bg-red-50 dark:hover:bg-red-950"
-        onClick={handleFavoriteToggle}
-        aria-label={
-          pokemon.isFavorite
-            ? t("remove-from-favorites")
-            : t("add-to-favorites")
-        }
-      >
-        <Icon
-          name="heart"
-          size={16}
-          className={
-            pokemon.isFavorite ? "fill-destructive text-destructive" : ""
+      {isSignedIn && (
+        <Button
+          size="icon"
+          variant="ghost"
+          className="absolute right-2 bottom-2 h-8 w-8 hover:bg-red-50 dark:hover:bg-red-950"
+          onClick={handleFavoriteToggle}
+          aria-label={
+            pokemon.isFavorite
+              ? t("remove-from-favorites")
+              : t("add-to-favorites")
           }
-        />
-      </Button>
+        >
+          <Icon
+            name="heart"
+            size={16}
+            className={
+              pokemon.isFavorite ? "fill-destructive text-destructive" : ""
+            }
+          />
+        </Button>
+      )}
     </div>
   );
 }

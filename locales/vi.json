@@ -19,11 +19,12 @@
       "localization-picker-title": "Chọn ngôn ngữ",
       "sign-in-button-text": "Đăng nhập",
       "theme-picker-title": "Chọn màu chủ đề",
-      "update-button-text": "Cập nhật Pokémon"
+      "update-button-text": "Cập nhật"
     }
   },
   "pokemon-detail": {
     "pick-a-pokemon-text": "Chọn một Pokémon để xem chi tiết",
+    "pokemon-loading-text": "Đang tải Pokémon...",
     "pokemon-not-found-text": "Không tìm thấy Pokémon"
   }
 }

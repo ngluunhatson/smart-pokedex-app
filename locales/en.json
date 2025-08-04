@@ -18,11 +18,12 @@
       "localization-picker-title": "Pick localization",
       "sign-in-button-text": "Sign In",
       "theme-picker-title": "Pick theme color",
-      "update-button-text": "Update Pokémon"
+      "update-button-text": "Update"
     }
   },
   "pokemon-detail": {
     "pick-a-pokemon-text": "Pick a Pokémon to see details",
+    "pokemon-loading-text": "Loading Pokémon...",
     "pokemon-not-found-text": "Pokemon not found"
   }
 }

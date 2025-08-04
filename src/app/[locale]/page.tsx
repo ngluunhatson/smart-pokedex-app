@@ -26,15 +26,13 @@ export default async function Home({
           <SidebarLayoutPanel
             width={400}
             variableForAutoCloseOnMobile={
-              currentSearchParams[SearchParamsEnum.POKE_NAME]
+              currentSearchParams[SearchParamsEnum.POKEMON_ID]
             }
           >
             <PanelContent />
           </SidebarLayoutPanel>
           <SidebarLayoutContent>
-            <PokemonDetail
-              pokeName={currentSearchParams[SearchParamsEnum.POKE_NAME]}
-            />
+            <PokemonDetail />
             <UserToolbar className="absolute top-2 right-2" />
           </SidebarLayoutContent>
         </SidebarLayout>
