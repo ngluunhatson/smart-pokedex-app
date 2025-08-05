@@ -1,3 +1,4 @@
+import { Id } from "@/convex/_generated/dataModel";
 import {
   SidebarLayout,
   SidebarLayoutContent,
@@ -19,20 +20,22 @@ export default async function Home({
 }) {
   const currentSearchParams = await searchParams;
 
+  const pokemonId = currentSearchParams[SearchParamsEnum.POKEMON_ID] as
+    | Id<"pokemons">
+    | undefined;
+
   return (
     <AppProvider searchParams={currentSearchParams}>
       <StoreProvider>
         <SidebarLayout className="relative h-full">
           <SidebarLayoutPanel
             width={400}
-            variableForAutoCloseOnMobile={
-              currentSearchParams[SearchParamsEnum.POKEMON_ID]
-            }
+            variableForAutoCloseOnMobile={pokemonId}
           >
             <PanelContent />
           </SidebarLayoutPanel>
           <SidebarLayoutContent>
-            <PokemonDetail />
+            <PokemonDetail pokemonId={pokemonId} />
             <UserToolbar className="absolute top-2 right-2" />
           </SidebarLayoutContent>
         </SidebarLayout>

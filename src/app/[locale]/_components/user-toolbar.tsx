@@ -14,11 +14,10 @@ export async function UserToolbar({
   ...props
 }: Omit<React.ComponentProps<"div">, "children">) {
   const t = await getTranslations("main-page.user-toolbar");
-  const { userId: clerkUserId } = await auth();
-  const isSignedIn = clerkUserId !== null;
-  const userInfo = isSignedIn
+  const { isAuthenticated, userId } = await auth();
+  const userInfo = isAuthenticated
     ? await fetchMutation(api.user_info.createOrGetUserInfo, {
-        clerkUserId,
+        clerkUserId: userId,
       })
     : null;
 
@@ -34,9 +33,9 @@ export async function UserToolbar({
         dropdownLabel={t("localization-picker-title")}
       />
 
-      {isSignedIn && userInfo?.role === "admin" && <UpdateButton />}
+      {isAuthenticated && userInfo?.role === "admin" && <UpdateButton />}
 
-      {isSignedIn ? (
+      {isAuthenticated ? (
         <UserButton />
       ) : (
         <SignInButton>

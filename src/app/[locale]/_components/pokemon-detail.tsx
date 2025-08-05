@@ -1,23 +1,24 @@
-"use client";
-
-import { Loader } from "@/components";
 import { api } from "@/convex/_generated/api";
-import { useAppContext } from "@/hooks";
+import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
-import { useQuery } from "convex/react";
-import { useTranslations } from "next-intl";
+import { fetchQuery } from "convex/nextjs";
+import { getTranslations } from "next-intl/server";
 
-export function PokemonDetail({
+interface PokemonDetailProps extends React.ComponentProps<"div"> {
+  pokemonId?: Id<"pokemons">;
+}
+
+export async function PokemonDetail({
+  pokemonId,
   className,
   ...props
-}: Omit<React.ComponentProps<"div">, "children">) {
-  const t = useTranslations("pokemon-detail");
-  const { pokemonId } = useAppContext();
-  const pokemon = useQuery(api.pokemons.getPokemonById, {
+}: PokemonDetailProps) {
+  const t = await getTranslations("pokemon-detail");
+  const pokemon = await fetchQuery(api.pokemons.getPokemonById, {
     id: pokemonId,
   });
 
-  if (!pokemonId || typeof pokemonId !== "string") {
+  if (!pokemonId) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <span className="text-2xl font-bold">{t("pick-a-pokemon-text")}</span>
@@ -25,20 +26,7 @@ export function PokemonDetail({
     );
   }
 
-  if (pokemon === undefined) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Loader size={48} />
-          <span className="text-2xl font-bold">
-            {t("pokemon-loading-text")}
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  if (pokemon === null) {
+  if (!pokemon) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <span className="text-2xl font-bold">

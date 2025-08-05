@@ -37,6 +37,8 @@ export const updateAppPokemonThunk = createAppAsyncThunk(
       }
     }
 
+    console.log("pokemonFormList", pokemonFormList);
+
     return pokemonFormList;
   },
 );
