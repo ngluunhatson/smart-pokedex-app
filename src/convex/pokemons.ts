@@ -1,7 +1,7 @@
 import { mutation, query } from "@/convex/_generated/server";
 import { PokemonUI } from "@/lib";
 import { v } from "convex/values";
-import { pokemonValidator } from "./schema";
+import { pokemonValidator } from "./schemas/pokemons";
 
 export const getAllPokemons = query({
   handler: async (ctx) => {

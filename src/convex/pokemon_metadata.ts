@@ -1,6 +1,6 @@
 import { mutation, query } from "@/convex/_generated/server";
 import { v } from "convex/values";
-import { pokemonMetadataValidator } from "./schema";
+import { pokemonMetadataValidator } from "./schemas/pokemon_metadata";
 
 export const getAllMetadata = query({
   handler: async (ctx) => {
