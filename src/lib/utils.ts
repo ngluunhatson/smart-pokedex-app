@@ -1,18 +1,6 @@
-import { Id } from "@/convex/_generated/dataModel";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { SearchParamsEnum } from "./enums";
-
-export type PokemonUI = {
-  _id: Id<"pokemons">;
-  pokeId: string;
-  displayId?: string;
-  name: string;
-  formName?: string;
-  types: { name: string; id: string }[];
-  imageUrl: string;
-  isFavorite?: boolean;
-};
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

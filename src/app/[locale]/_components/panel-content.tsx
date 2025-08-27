@@ -5,7 +5,7 @@ import { api } from "@/convex/_generated/api";
 import { useAppContext } from "@/hooks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { buildQueryObject, SearchParamsEnum } from "@/lib";
-import { appLoadingSlice } from "@/stores/app-loading/slice";
+import { appStateSelector, appStateSlice } from "@/stores/app-state/slice";
 import { useAppDispatch, useAppSelector } from "@/stores/with-types";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
@@ -23,9 +23,7 @@ export function PanelContent() {
   const t = useTranslations();
 
   const { offset, limit, pokemonId } = useAppContext();
-  const isAppLoading = useAppSelector(
-    appLoadingSlice.selectors.selectIsLoading,
-  );
+  const isAppLoading = useAppSelector(appStateSelector.selectIsLoading);
   const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -62,14 +60,14 @@ export function PanelContent() {
 
   useEffect(() => {
     dispatch(
-      appLoadingSlice.actions.setState({
+      appStateSlice.actions.setState({
         isLoading: true,
         status: "loading",
       }),
     );
     if (pokemonList) {
       dispatch(
-        appLoadingSlice.actions.setState({
+        appStateSlice.actions.setState({
           isLoading: false,
           status: "success",
         }),

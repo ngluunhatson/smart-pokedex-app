@@ -12,7 +12,7 @@ import {
 import { useAppContext } from "@/hooks";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { buildQueryObject, SearchParamsEnum } from "@/lib";
-import { appLoadingSlice } from "@/stores/app-loading/slice";
+import { appStateSelector } from "@/stores/app-state/slice";
 import { useAppSelector } from "@/stores/with-types";
 import { useTranslations } from "next-intl";
 
@@ -22,9 +22,7 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
   const t = useTranslations("main-page.sidebar-content");
 
   const { limit, pokemonId } = useAppContext();
-  const isAppLoading = useAppSelector(
-    appLoadingSlice.selectors.selectIsLoading,
-  );
+  const isAppUpdating = useAppSelector(appStateSelector.selectIsUpdating);
 
   const limitOptionArray = ["50", "100", "150", "200", maxLimit];
   if (!limitOptionArray.includes(limit.toString())) {
@@ -33,7 +31,7 @@ export function LimitPicker({ maxLimit }: { maxLimit: string }) {
 
   return (
     <Select
-      disabled={isAppLoading}
+      disabled={isAppUpdating}
       value={limit.toString()}
       onValueChange={(newLimit) => {
         router.push({

@@ -5,16 +5,24 @@ type AppJsonataFunction = (...args: any[]) => void;
 export class AppJsonata<K, T> {
   private jsonataStr: string;
   private functions: AppJsonataFunction[] = [];
+  private assignedVariables: Record<string, string> = {};
 
   constructor({
     jsonataStr,
     functions,
+    assignedVariables,
   }: {
     jsonataStr?: string;
     functions?: AppJsonataFunction[];
+    assignedVariables?: Record<string, string>;
   }) {
     this.jsonataStr = jsonataStr ?? "$";
     this.functions = functions ?? [];
+    this.assignedVariables = assignedVariables ?? {};
+  }
+
+  updateAssignedVariables(variables: Record<string, string>) {
+    this.assignedVariables = variables;
   }
 
   updateJsonataStr(jsonataStr: string) {
@@ -39,10 +47,13 @@ export class AppJsonata<K, T> {
       this.functions.forEach((func) => {
         expression.registerFunction(func.name, func);
       });
+      Object.entries(this.assignedVariables).forEach(([key, value]) => {
+        expression.assign(key, value);
+      });
       return await expression.evaluate(data);
     } catch (error) {
       console.error(error);
-      throw null;
+      return null;
     }
   }
 }

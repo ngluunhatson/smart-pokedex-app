@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { appLoadingSlice } from "./app-loading/slice";
+import { appStateSlice } from "./app-state/slice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      appLoading: appLoadingSlice.reducer,
+      appState: appStateSlice.reducer,
     },
   });
 };
