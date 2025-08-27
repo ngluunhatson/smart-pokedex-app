@@ -2,7 +2,7 @@
 
 import { Button } from "@/components";
 import { appStateSelector } from "@/stores/app-state/slice";
-import { updateAppPokemonThunk } from "@/stores/thunks";
+import { updateAppPokemonThunk } from "@/stores/app-state/thunks";
 import { useAppDispatch, useAppSelector } from "@/stores/with-types";
 import { useTranslations } from "next-intl";
 

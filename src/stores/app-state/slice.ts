@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { updateAppPokemonThunk } from "../thunks";
+import { updateAppPokemonThunk } from "./thunks";
 
 export interface AppState {
   isUpdating: boolean;

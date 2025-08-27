@@ -1,6 +1,6 @@
 import { AppJsonata, extractIdFromUrl, ParsedPokemon } from "@/lib";
 import { MainClient, type Pokemon, type PokemonForm } from "pokenode-ts";
-import { createAppAsyncThunk } from "./with-types";
+import { createAppAsyncThunk } from "../with-types";
 
 type PokemonFormWithPokemon = Omit<PokemonForm, "pokemon"> & {
   pokemon: Pokemon;
@@ -105,7 +105,7 @@ export const updateAppPokemonThunk = createAppAsyncThunk(
 
       const parsed = await appJsonata.evaluate(pokemonFormList);
       parsedPokemonList.push(...(parsed ?? []));
-
+      console.log("parsed", parsed);
       setTimeout(() => {}, 100);
 
       if (!pokemonFormResource.next) {
@@ -115,8 +115,6 @@ export const updateAppPokemonThunk = createAppAsyncThunk(
 
     const endTime = new Date().getTime();
     console.log("time taken in seconds", (endTime - startTime) / 1000);
-
-    console.log("parsedPokemonList", parsedPokemonList);
 
     return parsedPokemonList;
   },
